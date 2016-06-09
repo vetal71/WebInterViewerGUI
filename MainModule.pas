@@ -40,7 +40,7 @@ procedure TUniMainModule.dbConnBeforeConnect(Sender: TObject);
 begin
   with dbConn.Params do begin
     Values[ 'Database' ]     :=
-      TPath.GetDirectoryName( ParamStr( 0 ) ) +
+      UniServerModule.FilesFolderPath +
       '\DATA\IVIEWER.FDB';
     Values[ 'UserName' ]     := 'SYSDBA';
     Values[ 'Password' ]     := 'masterkey';

@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, uniGUITypes, uniGUIAbstractClasses,
   uniGUIClasses, uniGUIRegClasses, uniGUIForm, uniStatusBar, uniGUIBaseClasses,
-  uniPanel;
+  uniPanel, uniButton, uniBitBtn, uniSpeedButton, uniBasicGrid, uniDBGrid;
 
 type
   TMainForm = class(TUniForm)
@@ -14,6 +14,8 @@ type
     pnlGrid: TUniPanel;
     UniStatusBar1: TUniStatusBar;
     pnl1: TUniPanel;
+    UniSpeedButton1: TUniSpeedButton;
+    dbg1: TUniDBGrid;
   private
     { Private declarations }
   public

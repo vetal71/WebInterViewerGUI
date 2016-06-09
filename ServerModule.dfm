@@ -7,7 +7,7 @@ object UniServerModule: TUniServerModule
   BGColor = 8404992
   CharSet = 'utf-8'
   FaviconOptions = [foVisible, foLocalCache]
-  DefaultImageFormat = cfJpeg
+  DefaultImageFormat = cfPNG
   SuppressErrors = []
   UnavailableErrMsg = 'Communication Error'
   LoadingMessage = 'Loading...'
@@ -59,9 +59,11 @@ object UniServerModule: TUniServerModule
   Height = 328
   Width = 446
   object fdmConnections: TFDManager
+    WaitCursor = gcrNone
     FormatOptions.AssignedValues = [fvMapRules]
     FormatOptions.OwnMapRules = True
     FormatOptions.MapRules = <>
+    Active = True
     Left = 40
     Top = 24
   end
