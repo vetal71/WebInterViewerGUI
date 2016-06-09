@@ -1,0 +1,11 @@
+__history/
+*.dcu
+*.dproj
+*.dsk
+*.2007
+*.local
+*.identcache
+*.~dsk
+*.cbk
+*.stat
+__recovery/
