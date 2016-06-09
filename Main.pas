@@ -14,8 +14,9 @@ type
     pnlGrid: TUniPanel;
     UniStatusBar1: TUniStatusBar;
     pnl1: TUniPanel;
-    UniSpeedButton1: TUniSpeedButton;
+    btnNew: TUniSpeedButton;
     dbg1: TUniDBGrid;
+    btn1: TUniSpeedButton;
   private
     { Private declarations }
   public

@@ -6,13 +6,14 @@ object UniMainModule: TUniMainModule
   Width = 459
   object dbConn: TFDConnection
     Params.Strings = (
-      'Database=D:\DelphiProjects\WebInterViewerGUI\data\IVIEWER.FDB'
+      
+        'Database=D:\DelphiProjects\WebInterViewerGUI\files\data\IVIEWER.' +
+        'FDB'
       'User_Name=sysdba'
       'Password=masterkey'
       'CharacterSet=UTF8'
       'Server=localhost'
       'DriverID=FB')
-    Connected = True
     LoginPrompt = False
     BeforeConnect = dbConnBeforeConnect
     Left = 32

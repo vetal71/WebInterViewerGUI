@@ -41,7 +41,7 @@ begin
   with dbConn.Params do begin
     Values[ 'Database' ]     :=
       UniServerModule.FilesFolderPath +
-      '\DATA\IVIEWER.FDB';
+      'DATA\IVIEWER.FDB';
     Values[ 'UserName' ]     := 'SYSDBA';
     Values[ 'Password' ]     := 'masterkey';
     Values[ 'CharacterSet' ] := 'UTF8';
