@@ -9,3 +9,4 @@ __history/
 *.cbk
 *.stat
 __recovery/
+Win32/
