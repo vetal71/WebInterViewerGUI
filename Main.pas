@@ -6,17 +6,22 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
   Controls, Forms, Dialogs, uniGUITypes, uniGUIAbstractClasses,
   uniGUIClasses, uniGUIRegClasses, uniGUIForm, uniStatusBar, uniGUIBaseClasses,
-  uniPanel, uniButton, uniBitBtn, uniSpeedButton, uniBasicGrid, uniDBGrid;
+  uniPanel, uniButton, uniBitBtn, uniSpeedButton, uniBasicGrid, uniDBGrid,
+  uniTimer;
 
 type
   TMainForm = class(TUniForm)
     UniPanel1: TUniPanel;
     pnlGrid: TUniPanel;
-    UniStatusBar1: TUniStatusBar;
-    pnl1: TUniPanel;
+    sbMain: TUniStatusBar;
+    pnlAddInfo: TUniPanel;
     btnNew: TUniSpeedButton;
-    dbg1: TUniDBGrid;
-    btn1: TUniSpeedButton;
+    dbgContacts: TUniDBGrid;
+    btnEdit: TUniSpeedButton;
+    btnDelete: TUniSpeedButton;
+    btnSuperVizer: TUniSpeedButton;
+    tmrMain: TUniTimer;
+    procedure tmrMainTimer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -35,6 +40,12 @@ uses
 function MainForm: TMainForm;
 begin
   Result := TMainForm(UniMainModule.GetFormInstance(TMainForm));
+end;
+
+procedure TMainForm.tmrMainTimer(Sender: TObject);
+begin
+  // вывод даты и времени в статустроке
+  sbMain.Panels[ 0 ].Text := FormatDateTime('dd mmmm yyyy г. hh:mm:ss', Now);
 end;
 
 initialization
