@@ -1,16 +1,15 @@
 object MainForm: TMainForm
   Left = 0
   Top = 0
-  ClientHeight = 568
+  ClientHeight = 630
   ClientWidth = 1004
   Caption = #1041#1072#1079#1072' '#1080#1085#1090#1077#1088#1074#1100#1102#1077#1088#1086#1074
-  WindowState = wsMaximized
   OldCreateOrder = False
   ShowHint = True
   MonitoredKeys.Keys = <>
   PixelsPerInch = 96
   TextHeight = 13
-  object UniPanel1: TUniPanel
+  object pnlFilters: TUniPanel
     Left = 0
     Top = 0
     Width = 1004
@@ -330,7 +329,7 @@ object MainForm: TMainForm
     Left = 0
     Top = 75
     Width = 1004
-    Height = 346
+    Height = 333
     Hint = ''
     ShowHint = True
     BorderStyle = ubsNone
@@ -338,12 +337,13 @@ object MainForm: TMainForm
     Align = alClient
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
+    ExplicitHeight = 349
     object dbgContacts: TUniDBGrid
       AlignWithMargins = True
       Left = 3
       Top = 3
       Width = 998
-      Height = 340
+      Height = 327
       Hint = ''
       ShowHint = True
       HeaderTitleAlign = taCenter
@@ -353,6 +353,8 @@ object MainForm: TMainForm
       Align = alClient
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 1
+      OnClearFilters = dbgContactsClearFilters
+      OnColumnFilter = dbgContactsColumnFilter
       Columns = <
         item
           FieldName = 'CODE'
@@ -365,6 +367,8 @@ object MainForm: TMainForm
         end
         item
           FieldName = 'FIO'
+          Filtering.Enabled = True
+          Filtering.Editor = edtFIO
           Title.Caption = #1060#1048#1054
           Width = 200
           Visible = True
@@ -394,6 +398,8 @@ object MainForm: TMainForm
         end
         item
           FieldName = 'REGION'
+          Filtering.Enabled = True
+          Filtering.Editor = edtREGION
           Title.Caption = #1054#1041#1051#1040#1057#1058#1068
           Width = 100
           Visible = True
@@ -451,10 +457,39 @@ object MainForm: TMainForm
           CheckBoxField.FieldValues = 'true;false'
         end>
     end
+    object hpnlFilterComponents: TUniHiddenPanel
+      Left = 200
+      Top = 48
+      Width = 217
+      Height = 253
+      Hint = ''
+      Visible = False
+      ShowHint = True
+      object edtFIO: TUniEdit
+        Left = 16
+        Top = 16
+        Width = 185
+        Hint = ''
+        ShowHint = True
+        Text = ''
+        TabOrder = 1
+        EmptyText = #1060#1072#1084#1080#1083#1080#1103','#1080#1084#1103','#1086#1090#1095#1077#1089#1090#1074#1086
+      end
+      object edtREGION: TUniEdit
+        Left = 16
+        Top = 44
+        Width = 185
+        Hint = ''
+        ShowHint = True
+        Text = ''
+        TabOrder = 2
+        EmptyText = #1054#1073#1083#1072#1089#1090#1100
+      end
+    end
   end
   object sbMain: TUniStatusBar
     Left = 0
-    Top = 549
+    Top = 611
     Width = 1004
     Height = 19
     Hint = ''
@@ -473,19 +508,219 @@ object MainForm: TMainForm
     Anchors = [akLeft, akRight, akBottom]
     ParentColor = False
     Color = clWindow
+    ExplicitTop = 549
   end
   object pnlAddInfo: TUniPanel
     Left = 0
-    Top = 421
+    Top = 408
     Width = 1004
-    Height = 128
+    Height = 203
     Hint = ''
     ShowHint = True
     BorderStyle = ubsNone
-    Caption = #1055#1072#1085#1077#1083#1100' '#1076#1086#1087#1086#1083#1085#1080#1090#1077#1083#1100#1085#1086#1081' '#1080#1085#1092#1086#1088#1084#1072#1094#1080#1080
+    Caption = ''
     Align = alBottom
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 3
+    ExplicitTop = 407
+    object lbl1: TUniLabel
+      Left = 14
+      Top = 10
+      Width = 104
+      Height = 13
+      Hint = ''
+      ShowHint = True
+      Caption = #1069#1083#1077#1082#1090#1088#1086#1085#1085#1072#1103' '#1087#1086#1095#1090#1072':'
+      TabOrder = 1
+    end
+    object edtEMail: TUniDBEdit
+      Left = 125
+      Top = 6
+      Width = 242
+      Height = 22
+      Hint = ''
+      ShowHint = True
+      DataField = 'EMAIL'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 2
+      ReadOnly = True
+    end
+    object lbl2: TUniLabel
+      Left = 381
+      Top = 10
+      Width = 117
+      Height = 13
+      Hint = ''
+      ShowHint = True
+      Caption = #1044#1088#1091#1075#1080#1077' '#1089#1087#1086#1089#1086#1073#1099' '#1089#1074#1103#1079#1080':'
+      TabOrder = 3
+    end
+    object edtOtherTypeLinks: TUniDBEdit
+      Left = 505
+      Top = 6
+      Width = 496
+      Height = 22
+      Hint = ''
+      ShowHint = True
+      DataField = 'OTHERTYPELINKS'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 4
+      ReadOnly = True
+    end
+    object lbl3: TUniLabel
+      Left = 14
+      Top = 38
+      Width = 100
+      Height = 13
+      Hint = ''
+      ShowHint = True
+      Caption = #1040#1076#1088#1077#1089' '#1087#1088#1086#1078#1080#1074#1072#1085#1080#1103':'
+      TabOrder = 5
+    end
+    object edtADDRESS: TUniDBEdit
+      Left = 125
+      Top = 34
+      Width = 242
+      Height = 22
+      Hint = ''
+      ShowHint = True
+      DataField = 'ADDRESS'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 6
+      ReadOnly = True
+    end
+    object lbl4: TUniLabel
+      Left = 381
+      Top = 38
+      Width = 94
+      Height = 13
+      Hint = ''
+      ShowHint = True
+      Caption = #1044#1072#1085#1085#1099#1077' '#1087#1072#1089#1087#1086#1088#1090#1072':'
+      TabOrder = 7
+    end
+    object edtPASSPORT: TUniDBEdit
+      Left = 505
+      Top = 34
+      Width = 496
+      Height = 22
+      Hint = ''
+      ShowHint = True
+      DataField = 'PASSPORT'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 8
+      ReadOnly = True
+    end
+    object lbl5: TUniLabel
+      Left = 14
+      Top = 66
+      Width = 82
+      Height = 13
+      Hint = ''
+      ShowHint = True
+      Caption = #1057#1087#1077#1094#1080#1072#1083#1080#1079#1072#1094#1080#1103':'
+      TabOrder = 9
+    end
+    object edtSPECIALIZATION: TUniDBEdit
+      Left = 125
+      Top = 62
+      Width = 876
+      Height = 22
+      Hint = ''
+      ShowHint = True
+      DataField = 'SPECIALIZATION'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 10
+      ReadOnly = True
+    end
+    object lbl6: TUniLabel
+      Left = 14
+      Top = 94
+      Width = 92
+      Height = 13
+      Hint = ''
+      ShowHint = True
+      Caption = #1057#1087#1086#1089#1086#1073' '#1087#1077#1088#1077#1074#1086#1076#1072':'
+      TabOrder = 11
+    end
+    object edtTRANSFERTYPE: TUniDBEdit
+      Left = 125
+      Top = 90
+      Width = 242
+      Height = 22
+      Hint = ''
+      ShowHint = True
+      DataField = 'TRANSFERTYPE'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 12
+      ReadOnly = True
+    end
+    object lbl7: TUniLabel
+      Left = 381
+      Top = 94
+      Width = 107
+      Height = 13
+      Hint = ''
+      ShowHint = True
+      Caption = #1053#1086#1084#1077#1088#1072' '#1082#1072#1088#1090'-'#1089#1095#1077#1090#1086#1074':'
+      TabOrder = 13
+    end
+    object edtNUMBERCARD: TUniDBEdit
+      Left = 505
+      Top = 90
+      Width = 496
+      Height = 22
+      Hint = ''
+      ShowHint = True
+      DataField = 'NUMBERCARD'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 14
+      ReadOnly = True
+    end
+    object lbl8: TUniLabel
+      Left = 14
+      Top = 121
+      Width = 141
+      Height = 13
+      Hint = ''
+      ShowHint = True
+      Caption = #1054#1089#1085#1086#1074#1085#1099#1077' '#1093#1072#1088#1072#1082#1090#1077#1088#1080#1089#1090#1080#1082#1080':'
+      TabOrder = 15
+    end
+    object mmoGENERALCHARACTERISTIC: TUniDBMemo
+      Left = 161
+      Top = 118
+      Width = 840
+      Height = 36
+      Hint = ''
+      ShowHint = True
+      DataField = 'GENERALCHARACTERISTIC'
+      DataSource = UniMainModule.dsContacts
+      ReadOnly = True
+      TabOrder = 16
+    end
+    object lbl9: TUniLabel
+      Left = 14
+      Top = 163
+      Width = 94
+      Height = 13
+      Hint = ''
+      ShowHint = True
+      Caption = #1058#1077#1082#1091#1097#1080#1077' '#1087#1086#1084#1077#1090#1082#1080':'
+      TabOrder = 17
+    end
+    object mmoCURRENTNOTES: TUniDBMemo
+      Left = 161
+      Top = 160
+      Width = 840
+      Height = 36
+      Hint = ''
+      ShowHint = True
+      DataField = 'CURRENTNOTES'
+      DataSource = UniMainModule.dsContacts
+      ReadOnly = True
+      TabOrder = 18
+    end
   end
   object tmrMain: TUniTimer
     OnTimer = tmrMainTimer

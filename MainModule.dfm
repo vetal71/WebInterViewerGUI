@@ -7,7 +7,7 @@ object UniMainModule: TUniMainModule
   object dbConn: TFDConnection
     Params.Strings = (
       
-        'Database=D:\DelphiProjects\WebInterViewerGUI\files\data\IVIEWER.' +
+        'Database=E:\DelphiProjects\WebInterViewerGUI\files\data\IVIEWER.' +
         'FDB'
       'User_Name=sysdba'
       'Password=masterkey'
@@ -42,9 +42,26 @@ object UniMainModule: TUniMainModule
     UpdateOptions.KeyFields = 'CODE'
     UpdateOptions.AutoIncFields = 'CODE'
     SQL.Strings = (
-      'select * from contacts order by fio')
+      'select * from contacts '
+      'where '
+      '  fio like :fio and'
+      '  region like :region'
+      'order by code')
     Left = 96
     Top = 16
+    ParamData = <
+      item
+        Name = 'FIO'
+        DataType = ftString
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'REGION'
+        DataType = ftString
+        ParamType = ptInput
+        Value = Null
+      end>
   end
   object dsContacts: TDataSource
     DataSet = qryContacts
