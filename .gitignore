@@ -12,4 +12,5 @@ Win32/
 *.~dsk
 *.cbk
 *.stat
+*.otares
 __recovery/
