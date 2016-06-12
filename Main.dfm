@@ -2,7 +2,7 @@ object MainForm: TMainForm
   Left = 0
   Top = 0
   ClientHeight = 568
-  ClientWidth = 941
+  ClientWidth = 1004
   Caption = #1041#1072#1079#1072' '#1080#1085#1090#1077#1088#1074#1100#1102#1077#1088#1086#1074
   WindowState = wsMaximized
   OldCreateOrder = False
@@ -13,8 +13,8 @@ object MainForm: TMainForm
   object UniPanel1: TUniPanel
     Left = 0
     Top = 0
-    Width = 941
-    Height = 81
+    Width = 1004
+    Height = 75
     Hint = ''
     ShowHint = True
     BorderStyle = ubsNone
@@ -91,7 +91,7 @@ object MainForm: TMainForm
       Color = clWindow
     end
     object btnEdit: TUniSpeedButton
-      Left = 129
+      Left = 125
       Top = 3
       Width = 120
       Height = 32
@@ -159,7 +159,7 @@ object MainForm: TMainForm
       Color = clWindow
     end
     object btnDelete: TUniSpeedButton
-      Left = 255
+      Left = 247
       Top = 3
       Width = 120
       Height = 32
@@ -228,21 +228,109 @@ object MainForm: TMainForm
     end
     object btnSuperVizer: TUniSpeedButton
       Left = 3
-      Top = 41
+      Top = 37
       Width = 120
       Height = 32
-      Hint = #1054#1090#1073#1086#1088' '#1089#1091#1087#1077#1088#1074#1072#1081#1079#1077#1088#1086#1074
+      Hint = #1054#1090#1086#1073#1088#1072#1090#1100' '#1089#1091#1087#1077#1088#1074#1072#1081#1079#1077#1088#1086#1074
       ShowHint = True
       Caption = #1057#1091#1087#1077#1088#1074#1072#1081#1079#1077#1088#1099
+      ParentColor = False
+      Color = clWindow
+    end
+    object btn1: TUniSpeedButton
+      Left = 125
+      Top = 37
+      Width = 120
+      Height = 32
+      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      ShowHint = True
+      Caption = '"'#1058#1072#1081#1085#1099#1081'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1100
+      ParentColor = False
+      Color = clWindow
+    end
+    object btn2: TUniSpeedButton
+      Left = 247
+      Top = 37
+      Width = 120
+      Height = 32
+      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      ShowHint = True
+      Caption = #1054#1087#1077#1088#1072#1090#1086#1088' call '#1094#1077#1085#1090#1088#1072
+      ParentColor = False
+      Color = clWindow
+    end
+    object btn3: TUniSpeedButton
+      Left = 369
+      Top = 37
+      Width = 120
+      Height = 32
+      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      ShowHint = True
+      Caption = #1060#1086#1082#1091#1089' '#1075#1088#1091#1087#1087#1072
+      ParentColor = False
+      Color = clWindow
+    end
+    object btn4: TUniSpeedButton
+      Left = 491
+      Top = 37
+      Width = 120
+      Height = 32
+      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      ShowHint = True
+      Caption = #1059#1083#1080#1095#1085#1099#1081' '#1086#1087#1088#1086#1089
+      ParentColor = False
+      Color = clWindow
+    end
+    object btn5: TUniSpeedButton
+      Left = 613
+      Top = 37
+      Width = 120
+      Height = 32
+      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      ShowHint = True
+      Caption = #1055#1086#1082#1074#1072#1088#1090#1080#1088#1085#1099#1081' '#1086#1087#1088#1086#1089
+      ParentColor = False
+      Color = clWindow
+    end
+    object btn6: TUniSpeedButton
+      Left = 735
+      Top = 37
+      Width = 120
+      Height = 32
+      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      ShowHint = True
+      Caption = #1042#1073#1080#1074#1097#1080#1082#1080
+      ParentColor = False
+      Color = clWindow
+    end
+    object btn7: TUniSpeedButton
+      Left = 857
+      Top = 37
+      Width = 120
+      Height = 32
+      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      ShowHint = True
+      Caption = #1040#1091#1090#1089#1086#1088#1089
+      ParentColor = False
+      Color = clWindow
+    end
+    object btn8: TUniSpeedButton
+      Left = 857
+      Top = 3
+      Width = 120
+      Height = 32
+      Hint = #1055#1077#1095#1072#1090#1100' '#1076#1086#1075#1086#1074#1086#1088#1072
+      ShowHint = True
+      Caption = #1044#1086#1075#1086#1074#1086#1088
       ParentColor = False
       Color = clWindow
     end
   end
   object pnlGrid: TUniPanel
     Left = 0
-    Top = 81
-    Width = 941
-    Height = 340
+    Top = 75
+    Width = 1004
+    Height = 346
     Hint = ''
     ShowHint = True
     BorderStyle = ubsNone
@@ -250,31 +338,130 @@ object MainForm: TMainForm
     Align = alClient
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
-    ExplicitTop = 113
-    ExplicitHeight = 308
     object dbgContacts: TUniDBGrid
       AlignWithMargins = True
       Left = 3
       Top = 3
-      Width = 935
-      Height = 334
+      Width = 998
+      Height = 340
       Hint = ''
       ShowHint = True
+      HeaderTitleAlign = taCenter
+      DataSource = UniMainModule.dsContacts
+      Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgTitleClick, dgFilterClearButton]
       LoadMask.Message = 'Loading data...'
       Align = alClient
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 1
+      Columns = <
+        item
+          FieldName = 'CODE'
+          Title.Caption = #1050#1054#1044
+          Width = 50
+          Visible = True
+          Expanded = False
+          Sortable = True
+          CheckBoxField.FieldValues = 'true;false'
+        end
+        item
+          FieldName = 'FIO'
+          Title.Caption = #1060#1048#1054
+          Width = 200
+          Visible = True
+          Expanded = False
+          Sortable = True
+          CheckBoxField.FieldValues = 'true;false'
+        end
+        item
+          FieldName = 'ISSUPERVIZER'
+          Title.Caption = #1057#1059#1055#1045#1056#1042#1040#1049#1047#1045#1056
+          Width = 64
+          Visible = True
+          Expanded = False
+          PickList.Strings = (
+            #1044#1072
+            #1053#1077#1090)
+          CheckBoxField.FieldValues = '1;0'
+        end
+        item
+          FieldName = 'SEX'
+          Title.Caption = #1055#1054#1051
+          Width = 60
+          Visible = True
+          Expanded = False
+          Sortable = True
+          CheckBoxField.FieldValues = 'true;false'
+        end
+        item
+          FieldName = 'REGION'
+          Title.Caption = #1054#1041#1051#1040#1057#1058#1068
+          Width = 100
+          Visible = True
+          Expanded = False
+          Sortable = True
+          CheckBoxField.FieldValues = 'true;false'
+        end
+        item
+          FieldName = 'BIRTHDATE'
+          Title.Caption = #1044#1040#1058#1040' '#1056#1054#1046#1044'.'
+          Width = 70
+          Visible = True
+          Expanded = False
+          CheckBoxField.FieldValues = 'true;false'
+        end
+        item
+          FieldName = 'CELURARPHONE'
+          Title.Caption = #1052#1054#1041'.'#1058#1045#1051#1045#1060#1054#1053
+          Width = 70
+          Visible = True
+          Expanded = False
+          CheckBoxField.FieldValues = 'true;false'
+        end
+        item
+          FieldName = 'HOMEPHONE'
+          Title.Caption = #1044#1054#1052'.'#1058#1045#1051#1045#1060#1054#1053
+          Width = 70
+          Visible = True
+          Expanded = False
+          CheckBoxField.FieldValues = 'true;false'
+        end
+        item
+          FieldName = 'SPECIALIZATION'
+          Title.Caption = #1057#1055#1045#1062#1048#1040#1051#1048#1047#1040#1062#1048#1071
+          Width = 150
+          Visible = True
+          Expanded = False
+          Sortable = True
+          CheckBoxField.FieldValues = 'true;false'
+        end
+        item
+          FieldName = 'DATELAST'
+          Title.Caption = #1044#1040#1058#1040' '#1055#1054#1057#1051'.'#1059#1063#1040#1057#1058#1048#1071
+          Width = 70
+          Visible = True
+          Expanded = False
+          CheckBoxField.FieldValues = 'true;false'
+        end
+        item
+          FieldName = 'MEMBERPROJECTS'
+          Title.Caption = #1055#1056#1054#1045#1050#1058#1067
+          Width = 150
+          Visible = True
+          Expanded = False
+          CheckBoxField.FieldValues = 'true;false'
+        end>
     end
   end
   object sbMain: TUniStatusBar
     Left = 0
     Top = 549
-    Width = 941
+    Width = 1004
     Height = 19
     Hint = ''
     ShowHint = True
     Panels = <
       item
+        Alignment = taCenter
         Text = #1044#1072#1090#1072' '#1080' '#1074#1088#1077#1084#1103
         Width = 250
       end
@@ -290,7 +477,7 @@ object MainForm: TMainForm
   object pnlAddInfo: TUniPanel
     Left = 0
     Top = 421
-    Width = 941
+    Width = 1004
     Height = 128
     Hint = ''
     ShowHint = True
@@ -307,7 +494,7 @@ object MainForm: TMainForm
       '{'
       ' '
       '}')
-    Left = 600
-    Top = 32
+    Left = 544
+    Top = 168
   end
 end

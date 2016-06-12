@@ -7,14 +7,18 @@ uses
   FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
   FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.Phys.FBDef,
   FireDAC.VCLUI.Wait, FireDAC.Comp.UI, FireDAC.Phys.IBBase, FireDAC.Phys.FB,
-  Data.DB, FireDAC.Comp.Client, FireDAC.ConsoleUI.Wait;
+  Data.DB, FireDAC.Comp.Client, FireDAC.ConsoleUI.Wait, FireDAC.Stan.Param,
+  FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, FireDAC.Comp.DataSet;
 
 type
   TUniMainModule = class(TUniGUIMainModule)
     dbConn: TFDConnection;
     dbdFirebird: TFDPhysFBDriverLink;
     dwcCursor: TFDGUIxWaitCursor;
+    qryContacts: TFDQuery;
+    dsContacts: TDataSource;
     procedure dbConnBeforeConnect(Sender: TObject);
+    procedure dbConnAfterConnect(Sender: TObject);
   private
     { Private declarations }
   public
@@ -34,6 +38,11 @@ uses
 function UniMainModule: TUniMainModule;
 begin
   Result := TUniMainModule(UniApplication.UniMainModule)
+end;
+
+procedure TUniMainModule.dbConnAfterConnect(Sender: TObject);
+begin
+  qryContacts.Active := True;
 end;
 
 procedure TUniMainModule.dbConnBeforeConnect(Sender: TObject);

@@ -14,7 +14,9 @@ object UniMainModule: TUniMainModule
       'CharacterSet=UTF8'
       'Server=localhost'
       'DriverID=FB')
+    Connected = True
     LoginPrompt = False
+    AfterConnect = dbConnAfterConnect
     BeforeConnect = dbConnBeforeConnect
     Left = 32
     Top = 16
@@ -29,5 +31,24 @@ object UniMainModule: TUniMainModule
     ScreenCursor = gcrNone
     Left = 408
     Top = 216
+  end
+  object qryContacts: TFDQuery
+    Connection = dbConn
+    FetchOptions.AssignedValues = [evRecordCountMode]
+    FetchOptions.RecordCountMode = cmTotal
+    UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvGeneratorName]
+    UpdateOptions.GeneratorName = 'GEN_CONTACTS_ID'
+    UpdateOptions.UpdateTableName = 'CONTACTS'
+    UpdateOptions.KeyFields = 'CODE'
+    UpdateOptions.AutoIncFields = 'CODE'
+    SQL.Strings = (
+      'select * from contacts order by fio')
+    Left = 96
+    Top = 16
+  end
+  object dsContacts: TDataSource
+    DataSet = qryContacts
+    Left = 96
+    Top = 72
   end
 end
