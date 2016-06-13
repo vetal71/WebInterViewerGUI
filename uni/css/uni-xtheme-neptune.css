@@ -1,0 +1,27 @@
+.unigui_theme {
+		border-left-width: 6px;
+		border-bottom-width: 6px;
+		window-header-height: 37px;
+		tab-header-height: 38px;
+		form-show-icon: false;
+		panel-header-height: 36px;
+		panel-header-width: 36px;
+		menu-band-height: 37px;
+		calendar-form-width: 226px;
+		calendar-form-height: 294px;
+}
+
+.x-btn-default-small .x-btn-inner {
+  font:normal 11px tahoma, arial, helvetica, sans-serif;
+}
+.x-btn-default-medium .x-btn-inner {
+  font:normal 11px tahoma, arial, helvetica, sans-serif;
+}
+.x-btn-default-large .x-btn-inner {
+  font:normal 11px tahoma, arial, helvetica, sans-serif;
+}
+
+.x-theme-color {
+  background-color:#3892d3;
+  color: #ffffff;
+}
