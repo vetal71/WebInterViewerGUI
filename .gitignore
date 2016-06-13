@@ -13,4 +13,5 @@ Win32/
 *.cbk
 *.stat
 *.otares
+*.exe
 __recovery/
