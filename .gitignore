@@ -3,8 +3,7 @@ cache/
 log/
 temp/
 Win32/
-files/*
-*.FDB
+*.fdb
 *.dcu
 *.dproj
 *.dsk
@@ -16,5 +15,4 @@ files/*
 *.stat
 *.otares
 *.exe
-*.log
 __recovery/
