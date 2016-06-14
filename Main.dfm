@@ -7,6 +7,7 @@ object MainForm: TMainForm
   OnShow = UniFormShow
   OldCreateOrder = False
   ShowHint = True
+  OnClose = UniFormClose
   MonitoredKeys.Keys = <>
   PixelsPerInch = 96
   TextHeight = 13
@@ -227,92 +228,124 @@ object MainForm: TMainForm
       Color = clWindow
     end
     object btnSuperVizer: TUniSpeedButton
+      Tag = 1
       Left = 3
       Top = 37
       Width = 120
       Height = 32
       Hint = #1054#1090#1086#1073#1088#1072#1090#1100' '#1089#1091#1087#1077#1088#1074#1072#1081#1079#1077#1088#1086#1074
       ShowHint = True
+      GroupIndex = 1
+      AllowAllUp = True
       Caption = #1057#1091#1087#1077#1088#1074#1072#1081#1079#1077#1088#1099
       ParentColor = False
       Color = clWindow
+      OnClick = ButtonFilterClick
     end
-    object btn1: TUniSpeedButton
+    object btnHidenBuyer: TUniSpeedButton
+      Tag = 2
       Left = 125
       Top = 37
       Width = 120
       Height = 32
       Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
       ShowHint = True
+      GroupIndex = 1
+      AllowAllUp = True
       Caption = '"'#1058#1072#1081#1085#1099#1081'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1100
       ParentColor = False
       Color = clWindow
+      OnClick = ButtonFilterClick
     end
-    object btn2: TUniSpeedButton
+    object btnCallCenter: TUniSpeedButton
+      Tag = 3
       Left = 247
       Top = 37
       Width = 120
       Height = 32
-      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      Hint = #1054#1090#1073#1086#1088' '#1086#1087#1077#1088#1072#1090#1086#1088#1086#1074' call '#1094#1077#1085#1090#1088#1072
       ShowHint = True
+      GroupIndex = 1
+      AllowAllUp = True
       Caption = #1054#1087#1077#1088#1072#1090#1086#1088' call '#1094#1077#1085#1090#1088#1072
       ParentColor = False
       Color = clWindow
+      OnClick = ButtonFilterClick
     end
-    object btn3: TUniSpeedButton
+    object btnFocusGroup: TUniSpeedButton
+      Tag = 4
       Left = 369
       Top = 37
       Width = 120
       Height = 32
-      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      Hint = #1054#1090#1073#1086#1088' '#1080#1085#1090#1077#1088#1074#1100#1102#1077#1088#1086#1074' '#1076#1083#1103' '#1092#1086#1082#1091#1089' '#1075#1088#1091#1087#1087
       ShowHint = True
+      GroupIndex = 1
+      AllowAllUp = True
       Caption = #1060#1086#1082#1091#1089' '#1075#1088#1091#1087#1087#1072
       ParentColor = False
       Color = clWindow
+      OnClick = ButtonFilterClick
     end
-    object btn4: TUniSpeedButton
+    object btnStreet: TUniSpeedButton
+      Tag = 5
       Left = 491
       Top = 37
       Width = 120
       Height = 32
-      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      Hint = #1054#1090#1073#1086#1088' '#1080#1085#1090#1077#1088#1074#1100#1102#1077#1088#1086#1074' '#1076#1083#1103' '#1091#1083#1080#1095#1085#1086#1075#1086' '#1086#1087#1088#1086#1089#1072
       ShowHint = True
+      GroupIndex = 1
+      AllowAllUp = True
       Caption = #1059#1083#1080#1095#1085#1099#1081' '#1086#1087#1088#1086#1089
       ParentColor = False
       Color = clWindow
+      OnClick = ButtonFilterClick
     end
-    object btn5: TUniSpeedButton
+    object btnFlour: TUniSpeedButton
+      Tag = 6
       Left = 613
       Top = 37
       Width = 120
       Height = 32
-      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      Hint = #1054#1090#1073#1086#1088' '#1080#1085#1090#1077#1088#1074#1100#1102#1077#1088#1086#1074' '#1076#1083#1103' '#1087#1086#1082#1074#1072#1088#1090#1080#1088#1085#1086#1075#1086' '#1086#1087#1088#1086#1089#1072
       ShowHint = True
+      GroupIndex = 1
+      AllowAllUp = True
       Caption = #1055#1086#1082#1074#1072#1088#1090#1080#1088#1085#1099#1081' '#1086#1087#1088#1086#1089
       ParentColor = False
       Color = clWindow
+      OnClick = ButtonFilterClick
     end
-    object btn6: TUniSpeedButton
+    object btnEnterings: TUniSpeedButton
+      Tag = 7
       Left = 735
       Top = 37
       Width = 120
       Height = 32
-      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      Hint = #1054#1090#1073#1086#1088' '#1074#1073#1080#1074#1097#1080#1082#1086#1074
       ShowHint = True
+      GroupIndex = 1
+      AllowAllUp = True
       Caption = #1042#1073#1080#1074#1097#1080#1082#1080
       ParentColor = False
       Color = clWindow
+      OnClick = ButtonFilterClick
     end
-    object btn7: TUniSpeedButton
+    object btnOutSource: TUniSpeedButton
+      Tag = 8
       Left = 857
       Top = 37
       Width = 120
       Height = 32
-      Hint = #1054#1090#1073#1086#1088' "'#1090#1072#1081#1085#1099#1093'" '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1077#1081
+      Hint = #1054#1090#1073#1086#1088' '#1080#1085#1090#1077#1088#1074#1100#1102#1077#1088#1086#1074' '#1076#1083#1103' '#1072#1091#1090#1089#1086#1088#1089#1072
       ShowHint = True
+      GroupIndex = 1
+      AllowAllUp = True
       Caption = #1040#1091#1090#1089#1086#1088#1089
       ParentColor = False
       Color = clWindow
+      OnClick = ButtonFilterClick
     end
     object btn8: TUniSpeedButton
       Left = 857
@@ -346,6 +379,16 @@ object MainForm: TMainForm
       Height = 327
       Hint = ''
       ShowHint = True
+      ClientEvents.ExtEvents.Strings = (
+        
+          'resize=function resize(sender, width, height, oldWidth, oldHeigh' +
+          't, eOpts)'#13#10'{'#13#10'  //get grid new width'#13#10'  var grd_w=sender.getWidt' +
+          'h();'#13#10'  //validate'#13#10'  if(sender.columns.length==0) return;'#13#10'  //' +
+          'auto resize columns'#13#10'  crnt_w=0.073*grd_w; //Calc width in 7.3%'#13 +
+          #10'  crnt_w=Math.floor(crnt_w);'#13#10' //change column width: strat fro' +
+          'm 1 for first column (when indecator is true) otherwize start fr' +
+          'om 0'#13#10' sender.columns[1].setWidth(crnt_w);//first column (0: is ' +
+          'the indecator)'#13#10'}')
       HeaderTitleAlign = taCenter
       DataSource = UniMainModule.dsContacts
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgTitleClick, dgFilterClearButton]
@@ -381,11 +424,14 @@ object MainForm: TMainForm
           Title.Caption = #1057#1059#1055#1045#1056#1042#1040#1049#1047#1045#1056
           Width = 64
           Visible = True
+          Alignment = taLeftJustify
           Expanded = False
           PickList.Strings = (
             #1044#1072
             #1053#1077#1090)
+          CheckBoxField.BooleanFieldOnly = False
           CheckBoxField.FieldValues = '1;0'
+          CheckBoxField.DisplayValues = #1044#1072';'#1053#1077#1090
         end
         item
           FieldName = 'SEX'

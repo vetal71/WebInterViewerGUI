@@ -46,7 +46,8 @@ object UniMainModule: TUniMainModule
       'select * from contacts '
       'where '
       '  fio like :fio and'
-      '  region like :region'
+      '  region like :region '
+      '  and &cond'
       'order by code')
     Left = 96
     Top = 16
@@ -65,10 +66,22 @@ object UniMainModule: TUniMainModule
         Size = 30
         Value = '%%'
       end>
+    MacroData = <
+      item
+        Value = '(1=1)'
+        Name = 'COND'
+        DataType = mdIdentifier
+      end>
   end
   object dsContacts: TDataSource
     DataSet = qryContacts
     Left = 96
     Top = 72
+  end
+  object dbMonitor: TFDMoniFlatFileClientLink
+    EventKinds = [ekError, ekConnConnect, ekCmdExecute, ekCmdDataOut]
+    FileName = '.\connection.log'
+    Left = 304
+    Top = 16
   end
 end

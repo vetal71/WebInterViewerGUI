@@ -1,5 +1,7 @@
 unit MainModule;
 
+{.$define datalog}
+
 interface
 
 uses
@@ -18,6 +20,7 @@ type
     dwcCursor: TFDGUIxWaitCursor;
     qryContacts: TFDQuery;
     dsContacts: TDataSource;
+    dbMonitor: TFDMoniFlatFileClientLink;
     procedure dbConnBeforeConnect(Sender: TObject);
     procedure dbConnAfterConnect(Sender: TObject);
   private
@@ -43,11 +46,18 @@ end;
 
 procedure TUniMainModule.dbConnAfterConnect(Sender: TObject);
 begin
+  {$if datalog}
+  dbConn.ConnectionIntf.Tracing := True;
+  {$endif}
+  qryContacts.MacroByName('cond').AsRaw := '(1 = 1)';
   qryContacts.Active := True;
 end;
 
 procedure TUniMainModule.dbConnBeforeConnect(Sender: TObject);
 begin
+  {$if datalog}
+  dbMonitor.Tracing := True;
+  {$endif}
   with dbConn.Params do begin
     Values[ 'Database' ]     :=
       UniServerModule.FilesFolderPath +
@@ -55,6 +65,7 @@ begin
     Values[ 'UserName' ]     := 'SYSDBA';
     Values[ 'Password' ]     := 'masterkey';
     Values[ 'CharacterSet' ] := 'UTF8';
+    Values[ 'MonitorBy' ]    := 'FlatFile';
   end;
 end;
 

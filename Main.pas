@@ -21,13 +21,13 @@ type
     btnDelete: TUniSpeedButton;
     btnSuperVizer: TUniSpeedButton;
     tmrMain: TUniTimer;
-    btn1: TUniSpeedButton;
-    btn2: TUniSpeedButton;
-    btn3: TUniSpeedButton;
-    btn4: TUniSpeedButton;
-    btn5: TUniSpeedButton;
-    btn6: TUniSpeedButton;
-    btn7: TUniSpeedButton;
+    btnHidenBuyer: TUniSpeedButton;
+    btnCallCenter: TUniSpeedButton;
+    btnFocusGroup: TUniSpeedButton;
+    btnStreet: TUniSpeedButton;
+    btnFlour: TUniSpeedButton;
+    btnEnterings: TUniSpeedButton;
+    btnOutSource: TUniSpeedButton;
     btn8: TUniSpeedButton;
     lbl1: TUniLabel;
     edtEMail: TUniDBEdit;
@@ -55,8 +55,19 @@ type
     procedure dbgContactsColumnFilter(Sender: TUniDBGrid;
       const Column: TUniDBGridColumn; const Value: Variant);
     procedure UniFormShow(Sender: TObject);
+    procedure UniFormClose(Sender: TObject; var Action: TCloseAction);
+    procedure ButtonFilterClick(Sender: TObject);
   private
-    { Private declarations }
+//    Options: TOptions;
+//    IsFirstRun: Boolean;
+//    procedure ReadIni;
+//    procedure DBConnect;
+//    procedure InitConnection(ADBType: TDBType);
+//    procedure ImportData;
+//    procedure OpenData;
+//    procedure ShowEditForm(AMode: TDBMode);
+    procedure ApplyFilter(AFilterSQL: string);
+    function GetSQLFilter(aIndex: Integer): string;
   public
     { Public declarations }
   end;
@@ -98,10 +109,51 @@ begin
   end;
 end;
 
+procedure TMainForm.ApplyFilter(AFilterSQL: string);
+var
+  eFilter: string;
+begin
+  with UniMainModule do begin
+    qryContacts.Close;
+    qryContacts.MacroByName('cond').AsRaw := AFilterSQL;
+    qryContacts.Open;
+  end;
+end;
+
+function TMainForm.GetSQLFilter(aIndex: Integer): string;
+begin
+  //
+end;
+
+procedure TMainForm.ButtonFilterClick(Sender: TObject);
+var
+  SQLFilter : string;
+begin
+  if not (Sender is TUniSpeedButton) then Exit;
+  // Если кнопка нажата - сбрасываем фильтр и выходим из процедуры
+  if not TUniSpeedButton(Sender).Down then begin
+    ApplyFilter('(1 = 1)');
+    Exit;
+  end;
+  case TUniSpeedButton(Sender).Tag of
+    1: SQLFilter := 'ISSUPERVIZER=1';                                           // Фильтр по супервайзерам
+    2..8: SQLFilter := 'SPECIALIZATION CONTAINING ''' + GetSQLFilter(TUniSpeedButton(Sender).Tag) + '''';
+  end;
+  ApplyFilter(SQLFilter);
+end;
+
 procedure TMainForm.tmrMainTimer(Sender: TObject);
 begin
   // вывод даты и времени в статустроке
   sbMain.Panels[ 0 ].Text := FormatDateTime('dd mmmm yyyy г. hh:mm:ss', Now);
+end;
+
+procedure TMainForm.UniFormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  {$if datalog}
+  UniMainModule.dbConn.ConnectionIntf.Tracing := False;
+  UniMainModule.dbMonitor.Tracing := False;
+  {$endif}
 end;
 
 procedure TMainForm.UniFormShow(Sender: TObject);
