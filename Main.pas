@@ -54,6 +54,7 @@ type
     procedure dbgContactsClearFilters(Sender: TObject);
     procedure dbgContactsColumnFilter(Sender: TUniDBGrid;
       const Column: TUniDBGridColumn; const Value: Variant);
+    procedure UniFormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -101,6 +102,14 @@ procedure TMainForm.tmrMainTimer(Sender: TObject);
 begin
   // вывод даты и времени в статустроке
   sbMain.Panels[ 0 ].Text := FormatDateTime('dd mmmm yyyy г. hh:mm:ss', Now);
+end;
+
+procedure TMainForm.UniFormShow(Sender: TObject);
+begin
+  if UniMainModule.dbConn.Connected then
+    sbMain.Panels[ 1 ].Text := UniMainModule.dbConn.Params.Database
+  else
+    sbMain.Panels[ 1 ].Text := 'нет соединения...';
 end;
 
 initialization

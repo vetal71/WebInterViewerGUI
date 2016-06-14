@@ -7,13 +7,14 @@ object UniMainModule: TUniMainModule
   object dbConn: TFDConnection
     Params.Strings = (
       
-        'Database=E:\DelphiProjects\WebInterViewerGUI\files\data\IVIEWER.' +
+        'Database=D:\DelphiProjects\WebInterViewerGUI\files\data\IVIEWER.' +
         'FDB'
       'User_Name=sysdba'
       'Password=masterkey'
       'CharacterSet=UTF8'
       'Server=localhost'
-      'DriverID=FB')
+      'DriverID=FB'
+      'PageSize=8192')
     Connected = True
     LoginPrompt = False
     AfterConnect = dbConnAfterConnect
@@ -52,15 +53,17 @@ object UniMainModule: TUniMainModule
     ParamData = <
       item
         Name = 'FIO'
-        DataType = ftString
+        DataType = ftWideString
         ParamType = ptInput
-        Value = Null
+        Size = 100
+        Value = '%%'
       end
       item
         Name = 'REGION'
-        DataType = ftString
+        DataType = ftWideString
         ParamType = ptInput
-        Value = Null
+        Size = 30
+        Value = '%%'
       end>
   end
   object dsContacts: TDataSource

@@ -3,6 +3,7 @@ cache/
 log/
 temp/
 Win32/
+*.fdb
 *.dcu
 *.dproj
 *.dsk

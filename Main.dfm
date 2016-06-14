@@ -4,6 +4,7 @@ object MainForm: TMainForm
   ClientHeight = 630
   ClientWidth = 1004
   Caption = #1041#1072#1079#1072' '#1080#1085#1090#1077#1088#1074#1100#1102#1077#1088#1086#1074
+  OnShow = UniFormShow
   OldCreateOrder = False
   ShowHint = True
   MonitoredKeys.Keys = <>
@@ -337,7 +338,6 @@ object MainForm: TMainForm
     Align = alClient
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
-    ExplicitHeight = 349
     object dbgContacts: TUniDBGrid
       AlignWithMargins = True
       Left = 3
@@ -501,14 +501,13 @@ object MainForm: TMainForm
         Width = 250
       end
       item
-        Width = 50
+        Width = 250
       end>
     SizeGrip = False
     Align = alBottom
     Anchors = [akLeft, akRight, akBottom]
     ParentColor = False
     Color = clWindow
-    ExplicitTop = 549
   end
   object pnlAddInfo: TUniPanel
     Left = 0
@@ -522,7 +521,6 @@ object MainForm: TMainForm
     Align = alBottom
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 3
-    ExplicitTop = 407
     object lbl1: TUniLabel
       Left = 14
       Top = 10
