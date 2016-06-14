@@ -58,6 +58,7 @@ object UniServerModule: TUniServerModule
   SSL.SSLOptions.VerifyDepth = 0
   ConnectionFailureRecovery.ErrorMessage = 'Connection Error'
   ConnectionFailureRecovery.RetryMessage = 'Retrying...'
+  OnBeforeInit = UniGUIServerModuleBeforeInit
   Height = 328
   Width = 446
   object fdmConnections: TFDManager

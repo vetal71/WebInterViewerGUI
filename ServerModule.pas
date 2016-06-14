@@ -12,6 +12,7 @@ type
   TUniServerModule = class(TUniGUIServerModule)
     fdmConnections: TFDManager;
     procedure UniGUIServerModuleCreate(Sender: TObject);
+    procedure UniGUIServerModuleBeforeInit(Sender: TObject);
   private
     { Private declarations }
   protected
@@ -37,6 +38,13 @@ end;
 procedure TUniServerModule.FirstInit;
 begin
   InitServerModule(Self);
+end;
+
+procedure TUniServerModule.UniGUIServerModuleBeforeInit(Sender: TObject);
+begin
+  // TODO чтение из ini файла
+  ExtRoot := ExtractFilePath (ParamStr (0)) + 'ext-4.2.2.1144';
+  UniRoot := ExtractFilePath (ParamStr (0)) + 'uni';
 end;
 
 procedure TUniServerModule.UniGUIServerModuleCreate(Sender: TObject);
