@@ -402,7 +402,7 @@ object MainForm: TMainForm
         item
           FieldName = 'CODE'
           Title.Caption = #1050#1054#1044
-          Width = 50
+          Width = 60
           Visible = True
           Expanded = False
           Sortable = True
@@ -413,7 +413,7 @@ object MainForm: TMainForm
           Filtering.Enabled = True
           Filtering.Editor = edtFIO
           Title.Caption = #1060#1048#1054
-          Width = 200
+          Width = 250
           Visible = True
           Expanded = False
           Sortable = True
@@ -422,7 +422,7 @@ object MainForm: TMainForm
         item
           FieldName = 'ISSUPERVIZER'
           Title.Caption = #1057#1059#1055#1045#1056#1042#1040#1049#1047#1045#1056
-          Width = 64
+          Width = 70
           Visible = True
           Alignment = taLeftJustify
           Expanded = False
@@ -436,7 +436,7 @@ object MainForm: TMainForm
         item
           FieldName = 'SEX'
           Title.Caption = #1055#1054#1051
-          Width = 60
+          Width = 80
           Visible = True
           Expanded = False
           Sortable = True
@@ -447,7 +447,7 @@ object MainForm: TMainForm
           Filtering.Enabled = True
           Filtering.Editor = edtREGION
           Title.Caption = #1054#1041#1051#1040#1057#1058#1068
-          Width = 100
+          Width = 120
           Visible = True
           Expanded = False
           Sortable = True
@@ -456,7 +456,7 @@ object MainForm: TMainForm
         item
           FieldName = 'BIRTHDATE'
           Title.Caption = #1044#1040#1058#1040' '#1056#1054#1046#1044'.'
-          Width = 70
+          Width = 90
           Visible = True
           Expanded = False
           CheckBoxField.FieldValues = 'true;false'
@@ -464,7 +464,7 @@ object MainForm: TMainForm
         item
           FieldName = 'CELURARPHONE'
           Title.Caption = #1052#1054#1041'.'#1058#1045#1051#1045#1060#1054#1053
-          Width = 70
+          Width = 90
           Visible = True
           Expanded = False
           CheckBoxField.FieldValues = 'true;false'
@@ -472,7 +472,7 @@ object MainForm: TMainForm
         item
           FieldName = 'HOMEPHONE'
           Title.Caption = #1044#1054#1052'.'#1058#1045#1051#1045#1060#1054#1053
-          Width = 70
+          Width = 90
           Visible = True
           Expanded = False
           CheckBoxField.FieldValues = 'true;false'
@@ -480,7 +480,7 @@ object MainForm: TMainForm
         item
           FieldName = 'SPECIALIZATION'
           Title.Caption = #1057#1055#1045#1062#1048#1040#1051#1048#1047#1040#1062#1048#1071
-          Width = 150
+          Width = 200
           Visible = True
           Expanded = False
           Sortable = True
@@ -489,7 +489,7 @@ object MainForm: TMainForm
         item
           FieldName = 'DATELAST'
           Title.Caption = #1044#1040#1058#1040' '#1055#1054#1057#1051'.'#1059#1063#1040#1057#1058#1048#1071
-          Width = 70
+          Width = 90
           Visible = True
           Expanded = False
           CheckBoxField.FieldValues = 'true;false'
@@ -497,7 +497,7 @@ object MainForm: TMainForm
         item
           FieldName = 'MEMBERPROJECTS'
           Title.Caption = #1055#1056#1054#1045#1050#1058#1067
-          Width = 150
+          Width = 200
           Visible = True
           Expanded = False
           CheckBoxField.FieldValues = 'true;false'

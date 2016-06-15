@@ -1,6 +1,7 @@
 object UniServerModule: TUniServerModule
   OldCreateOrder = False
   OnCreate = UniGUIServerModuleCreate
+  OnDestroy = UniGUIServerModuleDestroy
   FilesFolder = 'files\'
   TempFolder = 'temp\'
   Port = 8080

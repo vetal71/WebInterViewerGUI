@@ -162,6 +162,7 @@ begin
     sbMain.Panels[ 1 ].Text := UniMainModule.dbConn.Params.Database
   else
     sbMain.Panels[ 1 ].Text := 'нет соединения...';
+  UniSession.AddJS(dbgContacts.JSName  + '.headerCt.forceFit=true;');
 end;
 
 initialization
