@@ -23,10 +23,11 @@ type
     dbMonitor: TFDMoniFlatFileClientLink;
     procedure dbConnBeforeConnect(Sender: TObject);
     procedure dbConnAfterConnect(Sender: TObject);
+    procedure UniGUIMainModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
-    { Public declarations }
+    FDataLog: Boolean;
   end;
 
 function UniMainModule: TUniMainModule;
@@ -37,6 +38,7 @@ implementation
 
 uses
   UniGUIVars, ServerModule, uniGUIApplication,
+  System.IniFiles,
   System.IOUtils;
 
 function UniMainModule: TUniMainModule;
@@ -46,29 +48,33 @@ end;
 
 procedure TUniMainModule.dbConnAfterConnect(Sender: TObject);
 begin
-  {$if datalog}
-  dbConn.ConnectionIntf.Tracing := True;
-  {$endif}
-  qryContacts.MacroByName('cond').AsRaw := '(1 = 1)';
-  qryContacts.Active := True;
+  if FDataLog then
+    dbConn.ConnectionIntf.Tracing := True;
 end;
 
 procedure TUniMainModule.dbConnBeforeConnect(Sender: TObject);
 begin
-  {$if datalog}
-  dbMonitor.Tracing := True;
-  {$endif}
-  with dbConn.Params do begin
-    Values[ 'Database' ]     :=
-      UniServerModule.FilesFolderPath +
-      'DATA\IVIEWER.FDB';
+  if FDataLog then
+    dbMonitor.Tracing := True;
+end;
+
+procedure TUniMainModule.UniGUIMainModuleCreate(Sender: TObject);
+var
+  xAppPath : string;
+begin
+  // указываем путь до клиентской библиотеки
+  xAppPath := UniServerModule.StartPath;
+  dbdFirebird.VendorLib := xAppPath + 'fbclient' + PathDelim +
+    'fbclient.dll';  with dbConn.Params do begin    Values[ 'Database' ]     := xAppPath + 'DATA\IVIEWER.FDB';
     Values[ 'UserName' ]     := 'SYSDBA';
     Values[ 'Password' ]     := 'masterkey';
     Values[ 'CharacterSet' ] := 'UTF8';
     Values[ 'MonitorBy' ]    := 'FlatFile';
-  end;
-end;
+  end;  with TIniFile.Create( UniServerModule.StartPath + 'config.ini' ) do  begin
+    FDataLog := ReadBool('DEBUG', 'DEBUG_DATA_LOG', False);
 
+    Free;
+  end;end;
 initialization
   RegisterMainModuleClass(TUniMainModule);
 end.

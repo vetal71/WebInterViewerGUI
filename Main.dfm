@@ -4,11 +4,11 @@ object MainForm: TMainForm
   ClientHeight = 630
   ClientWidth = 1004
   Caption = #1041#1072#1079#1072' '#1080#1085#1090#1077#1088#1074#1100#1102#1077#1088#1086#1074
-  OnShow = UniFormShow
   OldCreateOrder = False
   ShowHint = True
   OnClose = UniFormClose
   MonitoredKeys.Keys = <>
+  OnCreate = UniFormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object pnlFilters: TUniPanel
@@ -90,6 +90,7 @@ object MainForm: TMainForm
       Caption = #1044#1086#1073#1072#1074#1080#1090#1100
       ParentColor = False
       Color = clWindow
+      OnClick = btnNewClick
     end
     object btnEdit: TUniSpeedButton
       Left = 125

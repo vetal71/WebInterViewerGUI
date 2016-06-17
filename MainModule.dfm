@@ -1,21 +1,19 @@
 object UniMainModule: TUniMainModule
   OldCreateOrder = False
+  OnCreate = UniGUIMainModuleCreate
   Theme = 'neptune'
   MonitoredKeys.Keys = <>
   Height = 335
   Width = 459
   object dbConn: TFDConnection
     Params.Strings = (
-      
-        'Database=D:\DelphiProjects\WebInterViewerGUI\files\data\IVIEWER.' +
-        'FDB'
       'User_Name=sysdba'
       'Password=masterkey'
       'CharacterSet=UTF8'
       'Server=localhost'
       'DriverID=FB'
       'PageSize=8192')
-    Connected = True
+    ConnectedStoredUsage = [auRunTime]
     LoginPrompt = False
     AfterConnect = dbConnAfterConnect
     BeforeConnect = dbConnBeforeConnect
@@ -23,7 +21,6 @@ object UniMainModule: TUniMainModule
     Top = 16
   end
   object dbdFirebird: TFDPhysFBDriverLink
-    VendorLib = 'gds32.dll'
     Left = 408
     Top = 272
   end

@@ -10,6 +10,8 @@ uses
   uniTimer, uniEdit, uniDBEdit, uniLabel, uniMemo, uniDBMemo;
 
 type
+  TDBMode = (dbmAppend, dbmEdit);
+
   TMainForm = class(TUniForm)
     pnlFilters: TUniPanel;
     pnlGrid: TUniPanel;
@@ -54,18 +56,13 @@ type
     procedure dbgContactsClearFilters(Sender: TObject);
     procedure dbgContactsColumnFilter(Sender: TUniDBGrid;
       const Column: TUniDBGridColumn; const Value: Variant);
-    procedure UniFormShow(Sender: TObject);
     procedure UniFormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonFilterClick(Sender: TObject);
+    procedure ButtonFilterDblClick(Sender: TObject);
+    procedure UniFormCreate(Sender: TObject);
+    procedure btnNewClick(Sender: TObject);
   private
-//    Options: TOptions;
-//    IsFirstRun: Boolean;
-//    procedure ReadIni;
-//    procedure DBConnect;
-//    procedure InitConnection(ADBType: TDBType);
-//    procedure ImportData;
-//    procedure OpenData;
-//    procedure ShowEditForm(AMode: TDBMode);
+    procedure ShowEditForm(AMode: TDBMode);
     procedure ApplyFilter(AFilterSQL: string);
     function GetSQLFilter(aIndex: Integer): string;
   public
@@ -79,7 +76,8 @@ implementation
 {$R *.dfm}
 
 uses
-  uniGUIVars, MainModule, uniGUIApplication;
+  uniGUIVars, MainModule, uniGUIApplication, ServerModule, System.IniFiles,
+  Editor, Data.DB;
 
 function MainForm: TMainForm;
 begin
@@ -120,9 +118,87 @@ begin
   end;
 end;
 
-function TMainForm.GetSQLFilter(aIndex: Integer): string;
+procedure TMainForm.ButtonFilterDblClick(Sender: TObject);
+var sSQLFilterDef, sSQLFilterNew: string;
+var aIndex: Integer;
 begin
-  //
+  // При двойном клике на кнопке - изменение фильтра
+  if not (Sender is TUniSpeedButton) then Exit;
+  aIndex := TUniSpeedButton(Sender).Tag;
+  sSQLFilterDef := GetSQLFilter(aIndex);
+
+  sSQLFilterNew := InputBox('Фильтр', 'Введите новое значение фильтра', sSQLFilterDef);
+  with TIniFile.Create( UniServerModule.StartPath + 'config.ini' ) do
+  begin
+    WriteString('FILTER', 'Filter' + IntToStr(aIndex), sSQLFilterNew);
+  end;
+end;
+
+function TMainForm.GetSQLFilter(aIndex: Integer): string;
+var sSQLFilterDef: string;
+begin
+  case aIndex of
+    2: sSQLFilterDef := 'тайный покупатель';                // тайный покупатель
+    3: sSQLFilterDef := 'диспетчер колл-центра';            // call-центр
+    4: sSQLFilterDef := 'фокус-группа';                     // фокус-группа
+    5: sSQLFilterDef := 'уличный опрос';                    // уличный опрос
+    6: sSQLFilterDef := 'поквартирный опрос';               // поквартирный опрос
+    7: sSQLFilterDef := 'вбивка';                           // вбивка
+    8: sSQLFilterDef := 'аутсорс';                          // аутсорс
+  end;
+  with TIniFile.Create( UniServerModule.StartPath + 'config.ini' ) do
+  begin
+    Result := ReadString('FILTER', 'Filter' + IntToStr(aIndex), sSQLFilterDef);
+
+    Free;
+  end;
+end;
+
+procedure TMainForm.ShowEditForm(AMode: TDBMode);
+var
+  EditForm: TEditorForm;
+  eBookmark: TBookmark;
+  eFormResult: Integer;
+begin
+  // Изменить запись
+  eBookmark := UniMainModule.qryContacts.GetBookmark;
+  EditForm := TEditorForm.Create(Self);
+  try
+    UniMainModule.dbConn.StartTransaction;
+    if AMode = dbmAppend then UniMainModule.qryContacts.Append;
+    if AMode = dbmEdit then
+    begin
+      UniMainModule.qryContacts.Edit;
+      //fEdit.chbSpecialization.EditValue := fEdit.edtSpecialization.Text;
+    end;
+
+    EditForm.ShowModal(
+      procedure (Sender: TComponent; AResult:Integer)
+      begin
+        eFormResult := AResult;
+      end
+    );
+    if (eFormResult = 1) then
+    begin
+      //UniMainModule.qryContacts.FieldByName('SPECIALIZATION').AsString := fEdit.chbSpecialization.Text;
+      UniMainModule.qryContacts.Post;
+      UniMainModule.dbConn.Commit;
+      if AMode = dbmEdit then UniMainModule.qryContacts.GotoBookmark(eBookmark);
+    end
+    else
+    begin
+      UniMainModule.qryContacts.Cancel;
+      UniMainModule.dbConn.Rollback;
+      UniMainModule.qryContacts.GotoBookmark(eBookmark);
+    end;
+  finally
+    EditForm.Free;
+  end;
+end;
+
+procedure TMainForm.btnNewClick(Sender: TObject);
+begin
+  ShowEditForm( dbmAppend );
 end;
 
 procedure TMainForm.ButtonFilterClick(Sender: TObject);
@@ -150,19 +226,25 @@ end;
 
 procedure TMainForm.UniFormClose(Sender: TObject; var Action: TCloseAction);
 begin
-  {$if datalog}
-  UniMainModule.dbConn.ConnectionIntf.Tracing := False;
-  UniMainModule.dbMonitor.Tracing := False;
-  {$endif}
+  if UniMainModule.FDataLog then
+    UniMainModule.dbConn.ConnectionIntf.Tracing := False;
 end;
 
-procedure TMainForm.UniFormShow(Sender: TObject);
+procedure TMainForm.UniFormCreate(Sender: TObject);
 begin
-  if UniMainModule.dbConn.Connected then
-    sbMain.Panels[ 1 ].Text := UniMainModule.dbConn.Params.Database
-  else
-    sbMain.Panels[ 1 ].Text := 'нет соединения...';
+  try
+    UniMainModule.dbConn.Connected := True;
+    sbMain.Panels[ 1 ].Text := 'Соединение с БД успешно';
+  except
+    sbMain.Panels[ 1 ].Text := 'Нет соединения с базой данных...';
+    Exit;
+  end;
+
+  UniMainModule.qryContacts.MacroByName('cond').AsRaw := '(1 = 1)';
+  UniMainModule.qryContacts.Active := True;
+  // авторазмер колонок грида
   UniSession.AddJS(dbgContacts.JSName  + '.headerCt.forceFit=true;');
+
 end;
 
 initialization

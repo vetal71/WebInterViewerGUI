@@ -45,16 +45,13 @@ procedure TUniServerModule.UniGUIServerModuleBeforeInit(Sender: TObject);
 var
   tmpExtRoot, tmpUniRoot: string;
 begin
-  with TIniFile.Create(ExtractFilePath (ParamStr (0)) + 'config.ini') do begin
-    tmpExtRoot := ExtractFilePath (ParamStr (0)) + 'ext-4.2.2.1144';
-    tmpUniRoot := ExtractFilePath (ParamStr (0)) + 'uni';
+  with TIniFile.Create(StartPath + 'config.ini') do begin
+    tmpExtRoot := StartPath + 'ext-4.2.2.1144';
+    tmpUniRoot := StartPath + 'uni';
 
     ExtRoot := ReadString('MAIN', 'EXT_ROOT_PATH', tmpExtRoot);
     UniRoot := ReadString('MAIN', 'UNI_ROOT_PATH', tmpUniRoot);
 
-//    if ReadBool('MAIN', 'LOGGING', False) then
-//
-//    ;
     Free;
   end;
 end;
@@ -66,7 +63,7 @@ end;
 
 procedure TUniServerModule.UniGUIServerModuleDestroy(Sender: TObject);
 begin
-  with TIniFile.Create(ExtractFilePath (ParamStr (0)) + 'config.ini') do begin
+  with TIniFile.Create(StartPath + 'config.ini') do begin
     WriteString('MAIN', 'EXT_ROOT_PATH', ExtRoot);
     WriteString('MAIN', 'UNI_ROOT_PATH', UniRoot);
 
