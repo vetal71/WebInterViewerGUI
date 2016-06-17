@@ -5,7 +5,6 @@ object EditorForm: TEditorForm
   ClientWidth = 593
   Caption = #1056#1077#1076#1072#1082#1090#1086#1088
   BorderStyle = bsDialog
-  Position = poMainFormCenter
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
   PixelsPerInch = 96
@@ -21,10 +20,6 @@ object EditorForm: TEditorForm
     Align = alClient
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitLeft = 256
-    ExplicitTop = 168
-    ExplicitWidth = 256
-    ExplicitHeight = 128
   end
   object pnlButton: TUniPanel
     Left = 0
@@ -37,7 +32,6 @@ object EditorForm: TEditorForm
     Align = alBottom
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 1
-    ExplicitTop = 437
     object btnOK: TUniButton
       Left = 343
       Top = 7

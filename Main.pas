@@ -156,43 +156,38 @@ end;
 
 procedure TMainForm.ShowEditForm(AMode: TDBMode);
 var
-  EditForm: TEditorForm;
   eBookmark: TBookmark;
   eFormResult: Integer;
 begin
   // Изменить запись
   eBookmark := UniMainModule.qryContacts.GetBookmark;
-  EditForm := TEditorForm.Create(Self);
-  try
-    UniMainModule.dbConn.StartTransaction;
-    if AMode = dbmAppend then UniMainModule.qryContacts.Append;
-    if AMode = dbmEdit then
-    begin
-      UniMainModule.qryContacts.Edit;
-      //fEdit.chbSpecialization.EditValue := fEdit.edtSpecialization.Text;
-    end;
 
-    EditForm.ShowModal(
-      procedure (Sender: TComponent; AResult:Integer)
-      begin
-        eFormResult := AResult;
-      end
-    );
-    if (eFormResult = 1) then
+  UniMainModule.dbConn.StartTransaction;
+  if AMode = dbmAppend then UniMainModule.qryContacts.Append;
+  if AMode = dbmEdit then
+  begin
+    UniMainModule.qryContacts.Edit;
+    //fEdit.chbSpecialization.EditValue := fEdit.edtSpecialization.Text;
+  end;
+
+  EditorForm.ShowModal(
+    procedure (Sender: TComponent; AResult:Integer)
     begin
-      //UniMainModule.qryContacts.FieldByName('SPECIALIZATION').AsString := fEdit.chbSpecialization.Text;
-      UniMainModule.qryContacts.Post;
-      UniMainModule.dbConn.Commit;
-      if AMode = dbmEdit then UniMainModule.qryContacts.GotoBookmark(eBookmark);
+      eFormResult := AResult;
     end
-    else
-    begin
-      UniMainModule.qryContacts.Cancel;
-      UniMainModule.dbConn.Rollback;
-      UniMainModule.qryContacts.GotoBookmark(eBookmark);
-    end;
-  finally
-    EditForm.Free;
+  );
+  if (eFormResult = 1) then
+  begin
+    //UniMainModule.qryContacts.FieldByName('SPECIALIZATION').AsString := fEdit.chbSpecialization.Text;
+    UniMainModule.qryContacts.Post;
+    UniMainModule.dbConn.Commit;
+    if AMode = dbmEdit then UniMainModule.qryContacts.GotoBookmark(eBookmark);
+  end
+  else
+  begin
+    UniMainModule.qryContacts.Cancel;
+    UniMainModule.dbConn.Rollback;
+    UniMainModule.qryContacts.GotoBookmark(eBookmark);
   end;
 end;
 

@@ -19,12 +19,21 @@ type
     { Public declarations }
   end;
 
-implementation
+function EditorForm: TEditorForm;
 
-uses
-  uniGUIApplication;
+implementation
 
 {$R *.dfm}
 
+uses
+  uniGUIVars, MainModule, uniGUIApplication;
+
+function EditorForm: TEditorForm;
+begin
+  Result := TEditorForm(UniMainModule.GetFormInstance(TEditorForm));
+end;
+
+initialization
+  RegisterAppFormClass(TEditorForm);
 
 end.
