@@ -61,6 +61,7 @@ type
     procedure ButtonFilterDblClick(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
+    procedure btnEditClick(Sender: TObject);
   private
     procedure ShowEditForm(AMode: TDBMode);
     procedure ApplyFilter(AFilterSQL: string);
@@ -189,6 +190,11 @@ begin
     UniMainModule.dbConn.Rollback;
     UniMainModule.qryContacts.GotoBookmark(eBookmark);
   end;
+end;
+
+procedure TMainForm.btnEditClick(Sender: TObject);
+begin
+  ShowEditForm( dbmEdit );
 end;
 
 procedure TMainForm.btnNewClick(Sender: TObject);

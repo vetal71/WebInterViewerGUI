@@ -159,6 +159,7 @@ object MainForm: TMainForm
       Caption = #1048#1079#1084#1077#1085#1080#1090#1100
       ParentColor = False
       Color = clWindow
+      OnClick = btnEditClick
     end
     object btnDelete: TUniSpeedButton
       Left = 247

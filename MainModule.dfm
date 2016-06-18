@@ -11,8 +11,7 @@ object UniMainModule: TUniMainModule
       'Password=masterkey'
       'CharacterSet=UTF8'
       'Server=localhost'
-      'DriverID=FB'
-      'PageSize=8192')
+      'DriverID=FB')
     ConnectedStoredUsage = [auRunTime]
     LoginPrompt = False
     AfterConnect = dbConnAfterConnect
@@ -67,7 +66,6 @@ object UniMainModule: TUniMainModule
       item
         Value = '(1=1)'
         Name = 'COND'
-        DataType = mdIdentifier
       end>
   end
   object dsContacts: TDataSource
