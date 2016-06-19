@@ -11,8 +11,10 @@ object UniMainModule: TUniMainModule
       'Password=masterkey'
       'CharacterSet=UTF8'
       'Server=localhost'
-      'DriverID=FB')
+      'DriverID=FB'
+      'Database=E:\DelphiProjects\WebInterViewerGUI\data\IVIEWER.FDB')
     ConnectedStoredUsage = [auRunTime]
+    Connected = True
     LoginPrompt = False
     AfterConnect = dbConnAfterConnect
     BeforeConnect = dbConnBeforeConnect

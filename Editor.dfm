@@ -1,7 +1,7 @@
 object EditorForm: TEditorForm
   Left = 0
   Top = 0
-  ClientHeight = 482
+  ClientHeight = 566
   ClientWidth = 632
   Caption = #1056#1077#1076#1072#1082#1090#1080#1088#1086#1074#1072#1085#1080#1077' '#1079#1072#1087#1080#1089#1080
   BorderStyle = bsDialog
@@ -13,14 +13,14 @@ object EditorForm: TEditorForm
     Left = 0
     Top = 0
     Width = 632
-    Height = 438
+    Height = 522
     Hint = ''
     BorderStyle = ubsNone
     Caption = ''
     Align = alClient
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 0
-    ExplicitTop = 1
+    ExplicitHeight = 438
     object UniLabel1: TUniLabel
       Left = 7
       Top = 69
@@ -70,9 +70,9 @@ object EditorForm: TEditorForm
       TabOrder = 5
     end
     object edtFIO: TUniDBEdit
-      Left = 96
+      Left = 112
       Top = 37
-      Width = 329
+      Width = 313
       Height = 22
       Hint = ''
       DataField = 'FIO'
@@ -93,9 +93,9 @@ object EditorForm: TEditorForm
       TabOrder = 7
     end
     object edtREGION: TUniDBEdit
-      Left = 96
+      Left = 112
       Top = 65
-      Width = 152
+      Width = 136
       Height = 22
       Hint = ''
       DataField = 'REGION'
@@ -143,9 +143,9 @@ object EditorForm: TEditorForm
       TabOrder = 12
     end
     object edtCELURARPHONE: TUniDBEdit
-      Left = 96
+      Left = 112
       Top = 93
-      Width = 200
+      Width = 227
       Height = 22
       Hint = ''
       DataField = 'CELURARPHONE'
@@ -162,9 +162,9 @@ object EditorForm: TEditorForm
       TabOrder = 14
     end
     object edtHOMEPHONE: TUniDBEdit
-      Left = 423
+      Left = 433
       Top = 93
-      Width = 200
+      Width = 190
       Height = 22
       Hint = ''
       DataField = 'HOMEPHONE'
@@ -181,9 +181,9 @@ object EditorForm: TEditorForm
       TabOrder = 16
     end
     object mmoMEMBERPROJECTS: TUniDBMemo
-      Left = 96
+      Left = 112
       Top = 120
-      Width = 527
+      Width = 511
       Height = 41
       Hint = ''
       DataField = 'MEMBERPROJECTS'
@@ -191,7 +191,7 @@ object EditorForm: TEditorForm
       TabOrder = 17
     end
     object chkISSUPERVIZER: TUniDBCheckBox
-      Left = 96
+      Left = 112
       Top = 167
       Width = 97
       Height = 17
@@ -211,7 +211,7 @@ object EditorForm: TEditorForm
       TabOrder = 19
     end
     object edtEMAIL: TUniDBEdit
-      Left = 96
+      Left = 112
       Top = 190
       Width = 193
       Height = 22
@@ -221,7 +221,7 @@ object EditorForm: TEditorForm
       TabOrder = 20
     end
     object UniLabel11: TUniLabel
-      Left = 295
+      Left = 310
       Top = 194
       Width = 117
       Height = 13
@@ -230,9 +230,9 @@ object EditorForm: TEditorForm
       TabOrder = 21
     end
     object edtOTHERTYPELINKS: TUniDBEdit
-      Left = 418
+      Left = 433
       Top = 190
-      Width = 205
+      Width = 190
       Height = 22
       Hint = ''
       DataField = 'OTHERTYPELINKS'
@@ -280,16 +280,225 @@ object EditorForm: TEditorForm
     object UniLabel14: TUniLabel
       Left = 7
       Top = 275
+      Width = 82
+      Height = 13
+      Hint = ''
+      Caption = #1057#1087#1077#1094#1080#1072#1083#1080#1079#1072#1094#1080#1103':'
+      TabOrder = 27
+    end
+    object gbSpec: TUniGroupBox
+      Left = 112
+      Top = 274
+      Width = 511
+      Height = 70
+      Hint = ''
+      Caption = ''
+      TabOrder = 28
+      object chkOutSource: TUniCheckBox
+        Left = 8
+        Top = 6
+        Width = 97
+        Height = 17
+        Hint = ''
+        Caption = #1072#1091#1090#1089#1086#1088#1089
+        TabOrder = 1
+      end
+      object chk1: TUniCheckBox
+        Left = 8
+        Top = 26
+        Width = 97
+        Height = 17
+        Hint = ''
+        Caption = #1074#1073#1080#1074#1082#1072
+        TabOrder = 2
+      end
+      object chk2: TUniCheckBox
+        Left = 8
+        Top = 45
+        Width = 137
+        Height = 17
+        Hint = ''
+        Caption = #1076#1080#1089#1087#1077#1090#1095#1077#1088' '#1082#1086#1083#1083'-'#1094#1077#1085#1090#1088#1072
+        TabOrder = 3
+      end
+      object chk3: TUniCheckBox
+        Left = 149
+        Top = 6
+        Width = 136
+        Height = 17
+        Hint = ''
+        Caption = #1087#1086#1082#1074#1072#1088#1090#1080#1088#1085#1099#1081' '#1086#1087#1088#1086#1089
+        TabOrder = 4
+      end
+      object chk4: TUniCheckBox
+        Left = 149
+        Top = 45
+        Width = 97
+        Height = 17
+        Hint = ''
+        Caption = #1091#1083#1080#1095#1085#1099#1081' '#1086#1087#1088#1086#1089
+        TabOrder = 5
+      end
+      object chk5: TUniCheckBox
+        Left = 149
+        Top = 26
+        Width = 131
+        Height = 17
+        Hint = ''
+        Caption = #1090#1072#1081#1085#1099#1081' '#1087#1086#1082#1091#1087#1072#1090#1077#1083#1100
+        TabOrder = 6
+      end
+      object chk6: TUniCheckBox
+        Left = 286
+        Top = 6
+        Width = 97
+        Height = 17
+        Hint = ''
+        Caption = #1092#1086#1082#1091#1089'-'#1075#1088#1091#1087#1087#1072
+        TabOrder = 7
+      end
+    end
+    object lbl1: TUniLabel
+      Left = 7
+      Top = 354
+      Width = 92
+      Height = 13
+      Hint = ''
+      Caption = #1057#1087#1086#1089#1086#1073' '#1087#1077#1088#1077#1074#1086#1076#1072':'
+      TabOrder = 29
+    end
+    object edtTRANSFERTYPE: TUniDBEdit
+      Left = 112
+      Top = 350
+      Width = 193
+      Height = 22
+      Hint = ''
+      DataField = 'TRANSFERTYPE'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 30
+    end
+    object lbl2: TUniLabel
+      Left = 311
+      Top = 354
+      Width = 107
+      Height = 13
+      Hint = ''
+      Caption = #1053#1086#1084#1077#1088#1072' '#1082#1072#1088#1090'-'#1089#1095#1077#1090#1086#1074':'
+      TabOrder = 31
+    end
+    object edtNUMBERCARD: TUniDBEdit
+      Left = 424
+      Top = 350
+      Width = 199
+      Height = 22
+      Hint = ''
+      DataField = 'NUMBERCARD'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 32
+    end
+    object lbl3: TUniLabel
+      Left = 7
+      Top = 378
+      Width = 141
+      Height = 13
+      Hint = ''
+      Caption = #1054#1089#1085#1086#1074#1085#1099#1077' '#1093#1072#1088#1072#1082#1090#1077#1088#1080#1089#1090#1080#1082#1080':'
+      TabOrder = 33
+    end
+    object mmoGENERALCHARACTERISTIC: TUniDBMemo
+      Left = 7
+      Top = 392
+      Width = 616
+      Height = 40
+      Hint = ''
+      DataField = 'GENERALCHARACTERISTIC'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 34
+    end
+    object lbl4: TUniLabel
+      Left = 7
+      Top = 438
       Width = 94
       Height = 13
       Hint = ''
-      Caption = #1044#1072#1085#1085#1099#1077' '#1087#1072#1089#1087#1086#1088#1090#1072':'
-      TabOrder = 27
+      Caption = #1058#1077#1082#1091#1097#1080#1077' '#1087#1086#1084#1077#1090#1082#1080':'
+      TabOrder = 35
+    end
+    object mmoCURRENTNOTES: TUniDBMemo
+      Left = 7
+      Top = 452
+      Width = 616
+      Height = 40
+      Hint = ''
+      DataField = 'CURRENTNOTES'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 36
+    end
+    object lbl5: TUniLabel
+      Left = 7
+      Top = 502
+      Width = 97
+      Height = 13
+      Hint = ''
+      Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1072#1085#1082#1077#1090':'
+      TabOrder = 37
+    end
+    object edtCOUNTANKETA: TUniDBNumberEdit
+      Left = 110
+      Top = 498
+      Width = 80
+      Height = 22
+      Hint = ''
+      DataField = 'COUNTANKETA'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 38
+      DecimalPrecision = 0
+      DecimalSeparator = ','
+    end
+    object lbl6: TUniLabel
+      Left = 196
+      Top = 503
+      Width = 127
+      Height = 13
+      Hint = ''
+      Caption = #1055#1088#1086#1094#1077#1085#1090' '#1093#1086#1088#1086#1096#1080#1093' '#1072#1085#1082#1077#1090':'
+      TabOrder = 39
+    end
+    object edtPERCENTGOOD: TUniDBNumberEdit
+      Left = 329
+      Top = 498
+      Width = 80
+      Height = 22
+      Hint = ''
+      DataField = 'PERCENTGOOD'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 40
+      DecimalSeparator = ','
+    end
+    object lbl7: TUniLabel
+      Left = 418
+      Top = 502
+      Width = 119
+      Height = 13
+      Hint = ''
+      Caption = #1055#1088#1086#1094#1077#1085#1090' '#1087#1083#1086#1093#1080#1093' '#1072#1085#1082#1077#1090':'
+      TabOrder = 41
+    end
+    object edtPERCENTBAD: TUniDBNumberEdit
+      Left = 543
+      Top = 498
+      Width = 80
+      Height = 22
+      Hint = ''
+      DataField = 'PERCENTBAD'
+      DataSource = UniMainModule.dsContacts
+      TabOrder = 42
+      DecimalSeparator = ','
     end
   end
   object pnlButton: TUniPanel
     Left = 0
-    Top = 438
+    Top = 522
     Width = 632
     Height = 44
     Hint = ''
@@ -298,7 +507,6 @@ object EditorForm: TEditorForm
     Align = alBottom
     Anchors = [akLeft, akRight, akBottom]
     TabOrder = 1
-    ExplicitWidth = 593
     DesignSize = (
       632
       44)
@@ -312,7 +520,6 @@ object EditorForm: TEditorForm
       ModalResult = 1
       Anchors = [akTop, akRight]
       TabOrder = 1
-      ExplicitLeft = 343
     end
     object btnCancel: TUniButton
       Left = 504
@@ -324,7 +531,6 @@ object EditorForm: TEditorForm
       ModalResult = 2
       Anchors = [akTop, akRight]
       TabOrder = 2
-      ExplicitLeft = 466
     end
   end
 end

@@ -168,7 +168,7 @@ begin
   if AMode = dbmEdit then
   begin
     UniMainModule.qryContacts.Edit;
-    //fEdit.chbSpecialization.EditValue := fEdit.edtSpecialization.Text;
+    EditorForm.Specialization := UniMainModule.qryContacts.FieldByName('SPECIALIZATION').AsString;
   end;
 
   EditorForm.ShowModal(
@@ -179,7 +179,7 @@ begin
   );
   if (eFormResult = 1) then
   begin
-    //UniMainModule.qryContacts.FieldByName('SPECIALIZATION').AsString := fEdit.chbSpecialization.Text;
+    UniMainModule.qryContacts.FieldByName('SPECIALIZATION').AsString := EditorForm.Specialization;
     UniMainModule.qryContacts.Post;
     UniMainModule.dbConn.Commit;
     if AMode = dbmEdit then UniMainModule.qryContacts.GotoBookmark(eBookmark);
