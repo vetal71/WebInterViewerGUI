@@ -74,6 +74,8 @@ type
     function GetSpecialization: string;
   public
     property Specialization: string read GetSpecialization write SetSpecialization;
+  public
+    procedure AfterConstruction; override;
   end;
 
 function EditorForm: TEditorForm;
@@ -83,7 +85,7 @@ implementation
 {$R *.dfm}
 
 uses
-  uniGUIVars, MainModule, uniGUIApplication;
+  uniGUIVars, MainModule, uniGUIApplication, ServerModule;
 
 function EditorForm: TEditorForm;
 begin
@@ -108,6 +110,12 @@ begin
   end;
 end;
 
+procedure TEditorForm.AfterConstruction;
+begin
+  inherited;
+
+end;
+
 procedure TEditorForm.FillCheckBox(ADelimetedString: string);
 var
   sl: TStringList;
@@ -119,11 +127,11 @@ begin
     SplitText( ADelimetedString, sl, ';' );
     for I := 0 to sl.Count - 1 do
     begin
-      for J := 0 to gbSpec.ComponentCount - 1 do
+      for J := 0 to ComponentCount - 1 do
       begin
-        if (gbSpec.Components[ j ] is TUniCheckBox) then begin
-          CheckBox := TUniCheckBox(gbSpec.Components[ j ]);
-          if CheckBox.Caption = sl[ I ] then
+        if (Components[ j ] is TUniCheckBox) then begin
+          CheckBox := TUniCheckBox(Components[ j ]);
+          if CompareStr(CheckBox.Caption, sl[ I ]) = 0 then
             CheckBox.Checked := True
           else
             CheckBox.Checked := False;
@@ -146,14 +154,12 @@ var
 begin
   Result := '';
   eDelim := ';';
-  for i := 0 to gbSpec.ComponentCount - 1 do
+  for i := 0 to ComponentCount - 1 do
   begin
-    if (gbSpec.Components[ i ] is TUniCheckBox) then begin
-      CheckBox := TUniCheckBox(gbSpec.Components[ i ]);
+    if (Components[ i ] is TUniCheckBox) then begin
+      CheckBox := TUniCheckBox(Components[ i ]);
       if CheckBox.Checked then begin
-        Result := Result;
-        if i < gbSpec.ComponentCount - 1 then
-          Result := Result + eDelim;
+        Result := Result + eDelim;
       end;
     end;
   end;

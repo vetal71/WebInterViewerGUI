@@ -14,7 +14,6 @@ object UniMainModule: TUniMainModule
       'DriverID=FB'
       'Database=E:\DelphiProjects\WebInterViewerGUI\data\IVIEWER.FDB')
     ConnectedStoredUsage = [auRunTime]
-    Connected = True
     LoginPrompt = False
     AfterConnect = dbConnAfterConnect
     BeforeConnect = dbConnBeforeConnect
