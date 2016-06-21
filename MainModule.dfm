@@ -12,8 +12,9 @@ object UniMainModule: TUniMainModule
       'CharacterSet=UTF8'
       'Server=localhost'
       'DriverID=FB'
-      'Database=E:\DelphiProjects\WebInterViewerGUI\data\IVIEWER.FDB')
+      'Database=D:\DelphiProjects\WebInterViewerGUI\data\IVIEWER.FDB')
     ConnectedStoredUsage = [auRunTime]
+    Connected = True
     LoginPrompt = False
     AfterConnect = dbConnAfterConnect
     BeforeConnect = dbConnBeforeConnect
@@ -75,7 +76,7 @@ object UniMainModule: TUniMainModule
     Top = 72
   end
   object dbMonitor: TFDMoniFlatFileClientLink
-    EventKinds = [ekError, ekConnConnect, ekCmdExecute, ekCmdDataOut]
+    EventKinds = [ekError, ekConnConnect, ekCmdExecute, ekCmdDataIn, ekCmdDataOut, ekAdaptUpdate]
     FileName = '.\connection.log'
     Left = 304
     Top = 16

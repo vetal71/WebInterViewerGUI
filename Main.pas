@@ -7,7 +7,7 @@ uses
   Controls, Forms, Dialogs, uniGUITypes, uniGUIAbstractClasses,
   uniGUIClasses, uniGUIRegClasses, uniGUIForm, uniStatusBar, uniGUIBaseClasses,
   uniPanel, uniButton, uniBitBtn, uniSpeedButton, uniBasicGrid, uniDBGrid,
-  uniTimer, uniEdit, uniDBEdit, uniLabel, uniMemo, uniDBMemo;
+  uniTimer, uniEdit, uniDBEdit, uniLabel, uniMemo, uniDBMemo, Data.DB;
 
 type
   TDBMode = (dbmAppend, dbmEdit);
@@ -63,11 +63,14 @@ type
     procedure btnNewClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
   private
-    procedure ShowEditForm(AMode: TDBMode);
+    FBookmark: TBookmark;
+    FEditMode: TDBMode;
+
+    procedure ShowEditForm;
     procedure ApplyFilter(AFilterSQL: string);
     function GetSQLFilter(aIndex: Integer): string;
   public
-    { Public declarations }
+    procedure ShowCallBack(Sender: TComponent; AResult:Integer);
   end;
 
 function MainForm: TMainForm;
@@ -78,7 +81,7 @@ implementation
 
 uses
   uniGUIVars, MainModule, uniGUIApplication, ServerModule, System.IniFiles,
-  Editor, Data.DB;
+  Editor;
 
 function MainForm: TMainForm;
 begin
@@ -155,51 +158,47 @@ begin
   end;
 end;
 
-procedure TMainForm.ShowEditForm(AMode: TDBMode);
-var
-  eBookmark: TBookmark;
-  eFormResult: Integer;
+procedure TMainForm.ShowCallBack(Sender: TComponent; AResult: Integer);
+begin
+  if (AResult = 1) then begin
+    UniMainModule.qryContacts.FieldByName('SPECIALIZATION').AsString := EditorForm.Specialization;
+    UniMainModule.qryContacts.Post;
+    UniMainModule.dbConn.Commit;
+    if FEditMode = dbmEdit then
+      UniMainModule.qryContacts.GotoBookmark(FBookmark);
+  end else begin
+    UniMainModule.qryContacts.Cancel;
+    UniMainModule.dbConn.Rollback;
+    UniMainModule.qryContacts.GotoBookmark(FBookmark);
+  end;
+end;
+
+procedure TMainForm.ShowEditForm;
 begin
   // Изменить запись
-  eBookmark := UniMainModule.qryContacts.GetBookmark;
+  FBookmark := UniMainModule.qryContacts.GetBookmark;
 
   UniMainModule.dbConn.StartTransaction;
-  if AMode = dbmAppend then UniMainModule.qryContacts.Append;
-  if AMode = dbmEdit then
+  if FEditMode = dbmAppend then UniMainModule.qryContacts.Append;
+  if FEditMode = dbmEdit then
   begin
     UniMainModule.qryContacts.Edit;
     EditorForm.Specialization := UniMainModule.qryContacts.FieldByName('SPECIALIZATION').AsString;
   end;
 
-  EditorForm.ShowModal(
-    procedure (Sender: TComponent; AResult:Integer)
-    begin
-      eFormResult := AResult;
-    end
-  );
-  if (eFormResult = 1) then
-  begin
-    UniMainModule.qryContacts.FieldByName('SPECIALIZATION').AsString := EditorForm.Specialization;
-    UniMainModule.qryContacts.Post;
-    UniMainModule.dbConn.Commit;
-    if AMode = dbmEdit then UniMainModule.qryContacts.GotoBookmark(eBookmark);
-  end
-  else
-  begin
-    UniMainModule.qryContacts.Cancel;
-    UniMainModule.dbConn.Rollback;
-    UniMainModule.qryContacts.GotoBookmark(eBookmark);
-  end;
+  EditorForm.ShowModal( ShowCallBack );
 end;
 
 procedure TMainForm.btnEditClick(Sender: TObject);
 begin
-  ShowEditForm( dbmEdit );
+  FEditMode := dbmEdit;
+  ShowEditForm;
 end;
 
 procedure TMainForm.btnNewClick(Sender: TObject);
 begin
-  ShowEditForm( dbmAppend );
+  FEditMode := dbmAppend;
+  ShowEditForm;
 end;
 
 procedure TMainForm.ButtonFilterClick(Sender: TObject);

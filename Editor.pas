@@ -74,8 +74,6 @@ type
     function GetSpecialization: string;
   public
     property Specialization: string read GetSpecialization write SetSpecialization;
-  public
-    procedure AfterConstruction; override;
   end;
 
 function EditorForm: TEditorForm;
@@ -110,12 +108,6 @@ begin
   end;
 end;
 
-procedure TEditorForm.AfterConstruction;
-begin
-  inherited;
-
-end;
-
 procedure TEditorForm.FillCheckBox(ADelimetedString: string);
 var
   sl: TStringList;
@@ -131,10 +123,13 @@ begin
       begin
         if (Components[ j ] is TUniCheckBox) then begin
           CheckBox := TUniCheckBox(Components[ j ]);
-          if CompareStr(CheckBox.Caption, sl[ I ]) = 0 then
-            CheckBox.Checked := True
-          else
-            CheckBox.Checked := False;
+          if CompareStr(CheckBox.Caption, sl[ I ]) = 0 then begin
+            CheckBox.Checked := True;
+            CheckBox.Tag     := 1;                                              // Признак модификации
+          end else begin
+           if (CheckBox.Tag = 0) then
+             CheckBox.Checked := False;
+          end;
         end;
       end;
     end;
@@ -149,20 +144,19 @@ function TEditorForm.GetSpecialization: string;
 var
   I: Integer;
   CheckBox: TUniCheckBox;
-  eDelim: string;
 begin
   Result := '';
-  eDelim := ';';
   for i := 0 to ComponentCount - 1 do
   begin
     if (Components[ i ] is TUniCheckBox) then begin
       CheckBox := TUniCheckBox(Components[ i ]);
       if CheckBox.Checked then begin
-        Result := Result + eDelim;
+        if Result > '' then
+          Result := Result + ';';
+        Result := Result + CheckBox.Caption;
       end;
     end;
   end;
-  Result := Copy( Result, 1, Result.Length - 1 );
 end;
 
 procedure TEditorForm.SetSpecialization(AValue: string);
