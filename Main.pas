@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, uniGUITypes, uniGUIAbstractClasses,
+  Controls, Forms, Dialogs, UniGuiDialogs, uniGUITypes, uniGUIAbstractClasses,
   uniGUIClasses, uniGUIRegClasses, uniGUIForm, uniStatusBar, uniGUIBaseClasses,
   uniPanel, uniButton, uniBitBtn, uniSpeedButton, uniBasicGrid, uniDBGrid,
   uniTimer, uniEdit, uniDBEdit, uniLabel, uniMemo, uniDBMemo, Data.DB;
@@ -30,7 +30,7 @@ type
     btnFlour: TUniSpeedButton;
     btnEnterings: TUniSpeedButton;
     btnOutSource: TUniSpeedButton;
-    btn8: TUniSpeedButton;
+    btnDogovor: TUniSpeedButton;
     lbl1: TUniLabel;
     edtEMail: TUniDBEdit;
     lbl2: TUniLabel;
@@ -52,6 +52,7 @@ type
     hpnlFilterComponents: TUniHiddenPanel;
     edtFIO: TUniEdit;
     edtREGION: TUniEdit;
+    btnPrint: TUniSpeedButton;
     procedure tmrMainTimer(Sender: TObject);
     procedure dbgContactsClearFilters(Sender: TObject);
     procedure dbgContactsColumnFilter(Sender: TUniDBGrid;
@@ -62,6 +63,9 @@ type
     procedure UniFormCreate(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
+    procedure btnDogovorClick(Sender: TObject);
+    procedure btnPrintClick(Sender: TObject);
+    procedure btnDeleteClick(Sender: TObject);
   private
     FBookmark: TBookmark;
     FEditMode: TDBMode;
@@ -81,7 +85,113 @@ implementation
 
 uses
   uniGUIVars, MainModule, uniGUIApplication, ServerModule, System.IniFiles,
-  Editor;
+  Editor, Excel2010;
+
+function ExportToExcel(oDataSet : TDataSet; sFile : String): Boolean;
+var
+  iCol,iRow : Integer;
+  oExcel : TExcelApplication;
+  oWorkbook : TExcelWorkbook;
+  oSheet : TExcelWorksheet;
+begin
+  iCol := 0;
+  iRow := 0;
+  result := True;
+
+  oExcel := TExcelApplication.Create(Application);
+  oWorkbook := TExcelWorkbook.Create(Application);
+  oSheet := TExcelWorksheet.Create(Application);
+
+  try
+    oExcel.Visible[0] := False;
+    oExcel.Connect;
+  except
+    result := False;
+    MessageDlg('Excel не установлен.', mtWarning, [mbOk],
+      procedure(AComponent: TComponent; AResult: Integer)
+      begin
+        //
+      end
+    );
+    exit;
+  end;
+
+  oExcel.Visible[0] := True;
+  oExcel.Caption := 'Export Engine';
+  oExcel.Workbooks.Add(Null,0);
+
+  oWorkbook.ConnectTo(oExcel.Workbooks[1]);
+  oSheet.ConnectTo(oWorkbook.Worksheets[1] as _Worksheet);
+
+  oDataSet.DisableControls;
+  oDataSet.First;
+  while not oDataSet.Eof do begin
+    Inc(iRow);
+    for iCol:=1 to oDataSet.FieldCount do begin
+      oSheet.Cells.Item[iRow,iCol] := oDataSet.Fields[iCol-1].AsString;
+    end;
+    oDataSet.Next;
+  end;
+  oDataSet.First;
+  oDataSet.EnableControls;
+
+  //Change the worksheet name.
+  oSheet.Name := ' онтакты';
+
+(*
+
+  //Change the font properties of all columns.
+  oSheet.Columns.Font.Color := clPurple;
+  oSheet.Columns.Font.FontStyle := fsBold;
+  oSheet.Columns.Font.Size := 10;
+
+  //Change the font properties of a row.
+  oSheet.Range['A1','A1'].EntireRow.Font.Color := clNavy;
+  oSheet.Range['A1','A1'].EntireRow.Font.Size := 16;
+  oSheet.Range['A1','A1'].EntireRow.Font.FontStyle := fsBold;
+  oSheet.Range['A1','A1'].EntireRow.Font.Name := 'Arabic Transparent';
+
+  //Change the font properties of a row.
+  oSheet.Range['A2','A2'].EntireRow.Font.Color := clBlue;
+  oSheet.Range['A2','A2'].EntireRow.Font.Size := 12;
+  oSheet.Range['A2','A2'].EntireRow.Font.FontStyle := fsBold;
+  oSheet.Range['A2','A2'].EntireRow.Font.Name := 'Arabic Transparent';
+  oSheet.Range['A2','H2'].HorizontalAlignment := xlHAlignCenter;
+  {
+  //Change the font properties of a column.
+  oSheet.Range['A1','C1'].EntireColumn.Font.Color := clBlue;
+
+  //Change Cells color of a row.
+  oSheet.Range['A1', 'A1'].EntireRow.Interior.Color := clNavy;
+
+  //Change Cells color of a column.
+  oSheet.Range['C1', 'C1'].EntireColumn.Interior.Color := clYellow;
+
+  //Align a column.
+  oSheet.Range['A1','A1'].HorizontalAlignment := xlHAlignLeft;
+
+  //Set a column with manually.
+  // oSheet.Columns.Range['A1','A1'].ColumnWidth := 16;
+  }
+*)
+  //Auto fit all columns.
+  oSheet.Columns.AutoFit;
+
+  DeleteFile(sFile);
+
+  Sleep(2000);
+
+  oSheet.SaveAs(sFile);
+  oSheet.Disconnect;
+  oSheet.Free;
+
+  oWorkbook.Disconnect;
+  oWorkbook.Free;
+
+  oExcel.Quit;
+  oExcel.Disconnect;
+  oExcel.Free;
+end;
 
 function MainForm: TMainForm;
 begin
@@ -166,6 +276,8 @@ begin
     UniMainModule.dbConn.Commit;
     if FEditMode = dbmEdit then
       UniMainModule.qryContacts.GotoBookmark(FBookmark);
+    if FEditMode = dbmAppend then
+      UniMainModule.qryContacts.Refresh;
   end else begin
     UniMainModule.qryContacts.Cancel;
     UniMainModule.dbConn.Rollback;
@@ -179,14 +291,35 @@ begin
   FBookmark := UniMainModule.qryContacts.GetBookmark;
 
   UniMainModule.dbConn.StartTransaction;
-  if FEditMode = dbmAppend then UniMainModule.qryContacts.Append;
-  if FEditMode = dbmEdit then
-  begin
+  if FEditMode = dbmAppend then begin
+    UniMainModule.qryContacts.Insert;
+  end;
+  if FEditMode = dbmEdit then begin
     UniMainModule.qryContacts.Edit;
     EditorForm.Specialization := UniMainModule.qryContacts.FieldByName('SPECIALIZATION').AsString;
   end;
 
   EditorForm.ShowModal( ShowCallBack );
+end;
+
+procedure TMainForm.btnDeleteClick(Sender: TObject);
+var
+  iRes: Integer;
+begin
+  MessageDlg('', mtConfirmation, mbYesNo,
+
+  );
+end;
+
+procedure TMainForm.btnDogovorClick(Sender: TObject);
+var
+  ePath, eFileName: string;
+begin
+  // загрузка договора
+  ePath     := UniServerModule.StartPath;
+  eFileName := 'договор.doc';
+  if FileExists( ePath + eFileName ) then
+    UniSession.SendFile( ePath + eFileName );
 end;
 
 procedure TMainForm.btnEditClick(Sender: TObject);
@@ -199,6 +332,17 @@ procedure TMainForm.btnNewClick(Sender: TObject);
 begin
   FEditMode := dbmAppend;
   ShowEditForm;
+end;
+
+procedure TMainForm.btnPrintClick(Sender: TObject);
+var
+  ePath, eFileName: string;
+begin
+  // загрузка договора
+  ePath     := UniServerModule.StartPath;
+  eFileName := ' онтакты.xls';
+  ExportToExcel(dbgContacts.DataSource.DataSet, ePath + eFileName);
+  UniSession.SendFile( ePath + eFileName );
 end;
 
 procedure TMainForm.ButtonFilterClick(Sender: TObject);

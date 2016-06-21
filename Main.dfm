@@ -228,6 +228,7 @@ object MainForm: TMainForm
       Caption = #1059#1076#1072#1083#1080#1090#1100
       ParentColor = False
       Color = clWindow
+      OnClick = btnDeleteClick
     end
     object btnSuperVizer: TUniSpeedButton
       Tag = 1
@@ -349,7 +350,7 @@ object MainForm: TMainForm
       Color = clWindow
       OnClick = ButtonFilterClick
     end
-    object btn8: TUniSpeedButton
+    object btnDogovor: TUniSpeedButton
       Left = 857
       Top = 3
       Width = 120
@@ -359,6 +360,19 @@ object MainForm: TMainForm
       Caption = #1044#1086#1075#1086#1074#1086#1088
       ParentColor = False
       Color = clWindow
+      OnClick = btnDogovorClick
+    end
+    object btnPrint: TUniSpeedButton
+      Left = 369
+      Top = 3
+      Width = 120
+      Height = 32
+      Hint = #1055#1077#1095#1072#1090#1100
+      ShowHint = True
+      Caption = #1055#1077#1095#1072#1090#1100
+      ParentColor = False
+      Color = clWindow
+      OnClick = btnPrintClick
     end
   end
   object pnlGrid: TUniPanel
@@ -726,17 +740,19 @@ object MainForm: TMainForm
     object lbl8: TUniLabel
       Left = 14
       Top = 121
-      Width = 141
+      Width = 104
       Height = 13
       Hint = ''
       ShowHint = True
-      Caption = #1054#1089#1085#1086#1074#1085#1099#1077' '#1093#1072#1088#1072#1082#1090#1077#1088#1080#1089#1090#1080#1082#1080':'
+      Caption = #1054#1089#1085#1086#1074#1085#1099#1077' '#1093#1072#1088'-'#1082#1080':'
+      ParentFont = False
+      Font.Style = [fsBold]
       TabOrder = 15
     end
     object mmoGENERALCHARACTERISTIC: TUniDBMemo
-      Left = 161
+      Left = 125
       Top = 118
-      Width = 840
+      Width = 876
       Height = 36
       Hint = ''
       ShowHint = True
@@ -748,17 +764,19 @@ object MainForm: TMainForm
     object lbl9: TUniLabel
       Left = 14
       Top = 163
-      Width = 94
+      Width = 106
       Height = 13
       Hint = ''
       ShowHint = True
       Caption = #1058#1077#1082#1091#1097#1080#1077' '#1087#1086#1084#1077#1090#1082#1080':'
+      ParentFont = False
+      Font.Style = [fsBold]
       TabOrder = 17
     end
     object mmoCURRENTNOTES: TUniDBMemo
-      Left = 161
+      Left = 125
       Top = 160
-      Width = 840
+      Width = 875
       Height = 36
       Hint = ''
       ShowHint = True

@@ -198,6 +198,8 @@ object EditorForm: TEditorForm
       Hint = ''
       DataField = 'ISSUPERVIZER'
       DataSource = UniMainModule.dsContacts
+      ValueChecked = '1'
+      ValueUnchecked = '0'
       Caption = #1057#1091#1087#1077#1088#1074#1072#1081#1079#1077#1088
       TabOrder = 18
     end
