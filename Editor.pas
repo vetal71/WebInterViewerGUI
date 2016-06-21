@@ -150,7 +150,6 @@ var
   I: Integer;
   CheckBox: TUniCheckBox;
   eDelim: string;
-
 begin
   Result := '';
   eDelim := ';';
@@ -163,6 +162,7 @@ begin
       end;
     end;
   end;
+  Result := Copy( Result, 1, Result.Length - 1 );
 end;
 
 procedure TEditorForm.SetSpecialization(AValue: string);
