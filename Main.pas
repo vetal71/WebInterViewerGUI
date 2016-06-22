@@ -75,6 +75,7 @@ type
     function GetSQLFilter(aIndex: Integer): string;
   public
     procedure ShowCallBack(Sender: TComponent; AResult:Integer);
+    procedure ConfirmDeleteCallBack(Sender: TComponent; AResult:Integer);
   end;
 
 function MainForm: TMainForm;
@@ -85,113 +86,7 @@ implementation
 
 uses
   uniGUIVars, MainModule, uniGUIApplication, ServerModule, System.IniFiles,
-  Editor, Excel2010;
-
-function ExportToExcel(oDataSet : TDataSet; sFile : String): Boolean;
-var
-  iCol,iRow : Integer;
-  oExcel : TExcelApplication;
-  oWorkbook : TExcelWorkbook;
-  oSheet : TExcelWorksheet;
-begin
-  iCol := 0;
-  iRow := 0;
-  result := True;
-
-  oExcel := TExcelApplication.Create(Application);
-  oWorkbook := TExcelWorkbook.Create(Application);
-  oSheet := TExcelWorksheet.Create(Application);
-
-  try
-    oExcel.Visible[0] := False;
-    oExcel.Connect;
-  except
-    result := False;
-    MessageDlg('Excel не установлен.', mtWarning, [mbOk],
-      procedure(AComponent: TComponent; AResult: Integer)
-      begin
-        //
-      end
-    );
-    exit;
-  end;
-
-  oExcel.Visible[0] := True;
-  oExcel.Caption := 'Export Engine';
-  oExcel.Workbooks.Add(Null,0);
-
-  oWorkbook.ConnectTo(oExcel.Workbooks[1]);
-  oSheet.ConnectTo(oWorkbook.Worksheets[1] as _Worksheet);
-
-  oDataSet.DisableControls;
-  oDataSet.First;
-  while not oDataSet.Eof do begin
-    Inc(iRow);
-    for iCol:=1 to oDataSet.FieldCount do begin
-      oSheet.Cells.Item[iRow,iCol] := oDataSet.Fields[iCol-1].AsString;
-    end;
-    oDataSet.Next;
-  end;
-  oDataSet.First;
-  oDataSet.EnableControls;
-
-  //Change the worksheet name.
-  oSheet.Name := 'Контакты';
-
-(*
-
-  //Change the font properties of all columns.
-  oSheet.Columns.Font.Color := clPurple;
-  oSheet.Columns.Font.FontStyle := fsBold;
-  oSheet.Columns.Font.Size := 10;
-
-  //Change the font properties of a row.
-  oSheet.Range['A1','A1'].EntireRow.Font.Color := clNavy;
-  oSheet.Range['A1','A1'].EntireRow.Font.Size := 16;
-  oSheet.Range['A1','A1'].EntireRow.Font.FontStyle := fsBold;
-  oSheet.Range['A1','A1'].EntireRow.Font.Name := 'Arabic Transparent';
-
-  //Change the font properties of a row.
-  oSheet.Range['A2','A2'].EntireRow.Font.Color := clBlue;
-  oSheet.Range['A2','A2'].EntireRow.Font.Size := 12;
-  oSheet.Range['A2','A2'].EntireRow.Font.FontStyle := fsBold;
-  oSheet.Range['A2','A2'].EntireRow.Font.Name := 'Arabic Transparent';
-  oSheet.Range['A2','H2'].HorizontalAlignment := xlHAlignCenter;
-  {
-  //Change the font properties of a column.
-  oSheet.Range['A1','C1'].EntireColumn.Font.Color := clBlue;
-
-  //Change Cells color of a row.
-  oSheet.Range['A1', 'A1'].EntireRow.Interior.Color := clNavy;
-
-  //Change Cells color of a column.
-  oSheet.Range['C1', 'C1'].EntireColumn.Interior.Color := clYellow;
-
-  //Align a column.
-  oSheet.Range['A1','A1'].HorizontalAlignment := xlHAlignLeft;
-
-  //Set a column with manually.
-  // oSheet.Columns.Range['A1','A1'].ColumnWidth := 16;
-  }
-*)
-  //Auto fit all columns.
-  oSheet.Columns.AutoFit;
-
-  DeleteFile(sFile);
-
-  Sleep(2000);
-
-  oSheet.SaveAs(sFile);
-  oSheet.Disconnect;
-  oSheet.Free;
-
-  oWorkbook.Disconnect;
-  oWorkbook.Free;
-
-  oExcel.Quit;
-  oExcel.Disconnect;
-  oExcel.Free;
-end;
+  Editor, DataSetExports, VCL.FlexCel.Core, FlexCel.XlsAdapter;
 
 function MainForm: TMainForm;
 begin
@@ -245,6 +140,20 @@ begin
   with TIniFile.Create( UniServerModule.StartPath + 'config.ini' ) do
   begin
     WriteString('FILTER', 'Filter' + IntToStr(aIndex), sSQLFilterNew);
+  end;
+end;
+
+procedure TMainForm.ConfirmDeleteCallBack(Sender: TComponent; AResult: Integer);
+begin
+  if AResult = mrYes then begin
+    try
+      UniMainModule.dbConn.StartTransaction;
+      UniMainModule.qryContacts.Delete;
+      UniMainModule.dbConn.Commit;
+      UniMainModule.qryContacts.Refresh;
+    except
+      UniMainModule.dbConn.Rollback;
+    end;
   end;
 end;
 
@@ -303,12 +212,13 @@ begin
 end;
 
 procedure TMainForm.btnDeleteClick(Sender: TObject);
+const cDeleteConfirm = 'Удалить контакт "%s" ?';
 var
   iRes: Integer;
+  eConfirm: string;
 begin
-  MessageDlg('', mtConfirmation, mbYesNo,
-
-  );
+  eConfirm := Format(cDeleteConfirm, [ UniMainModule.qryContacts.FieldByName('FIO').AsString ]);
+  MessageDlg(eConfirm, mtConfirmation, mbYesNo, ConfirmDeleteCallBack);
 end;
 
 procedure TMainForm.btnDogovorClick(Sender: TObject);
@@ -336,13 +246,30 @@ end;
 
 procedure TMainForm.btnPrintClick(Sender: TObject);
 var
+  XLSX : TExcelFile;
+  Mem : TMemoryStream;
+  OldDataSource: TDataSource;
   ePath, eFileName: string;
 begin
-  // загрузка договора
   ePath     := UniServerModule.StartPath;
   eFileName := 'Контакты.xls';
-  ExportToExcel(dbgContacts.DataSource.DataSet, ePath + eFileName);
-  UniSession.SendFile( ePath + eFileName );
+  OldDataSource := dbgContacts.DataSource;                                      // Сохраним источник для дальнейшего восстановления
+  dbgContacts.DataSource := Nil;                                                //<- Stop DBGrid from updating
+
+  XLSX := TXLSFile.Create;
+  try
+    DataSetToXLS( XLSX, UniMainModule.qryContacts );                            //<- Your dataset goes here. I use SQLDirect
+
+    Mem := TMemoryStream.Create;
+    XLSX.Save( Mem, TFileFormats( 0 ) );
+    Mem.Position := 0;
+    UniSession.SendStream( Mem, ePath + eFileName );                            //<- Push to browser
+  except
+    Mem.Free;
+    XLSX.Free;
+  end;
+
+  dbgContacts.DataSource := OldDataSource;
 end;
 
 procedure TMainForm.ButtonFilterClick(Sender: TObject);

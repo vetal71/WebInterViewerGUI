@@ -13,7 +13,8 @@ uses
   ServerModule in 'ServerModule.pas' {UniServerModule: TUniGUIServerModule},
   MainModule in 'MainModule.pas' {UniMainModule: TUniGUIMainModule},
   Main in 'Main.pas' {MainForm: TUniForm},
-  Editor in 'Editor.pas' {EditorForm: TUniForm};
+  Editor in 'Editor.pas' {EditorForm: TUniForm},
+  DataSetExports in 'DataSetExports.pas';
 
 {$R *.res}
 
