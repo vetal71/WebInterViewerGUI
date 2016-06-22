@@ -59,13 +59,13 @@ type
       const Column: TUniDBGridColumn; const Value: Variant);
     procedure UniFormClose(Sender: TObject; var Action: TCloseAction);
     procedure ButtonFilterClick(Sender: TObject);
-    procedure ButtonFilterDblClick(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
     procedure btnNewClick(Sender: TObject);
     procedure btnEditClick(Sender: TObject);
     procedure btnDogovorClick(Sender: TObject);
     procedure btnPrintClick(Sender: TObject);
     procedure btnDeleteClick(Sender: TObject);
+    procedure btnSettingsClick(Sender: TObject);
   private
     FBookmark: TBookmark;
     FEditMode: TDBMode;
@@ -124,22 +124,6 @@ begin
     qryContacts.Close;
     qryContacts.MacroByName('cond').AsRaw := AFilterSQL;
     qryContacts.Open;
-  end;
-end;
-
-procedure TMainForm.ButtonFilterDblClick(Sender: TObject);
-var sSQLFilterDef, sSQLFilterNew: string;
-var aIndex: Integer;
-begin
-  // При двойном клике на кнопке - изменение фильтра
-  if not (Sender is TUniSpeedButton) then Exit;
-  aIndex := TUniSpeedButton(Sender).Tag;
-  sSQLFilterDef := GetSQLFilter(aIndex);
-
-  sSQLFilterNew := InputBox('Фильтр', 'Введите новое значение фильтра', sSQLFilterDef);
-  with TIniFile.Create( UniServerModule.StartPath + 'config.ini' ) do
-  begin
-    WriteString('FILTER', 'Filter' + IntToStr(aIndex), sSQLFilterNew);
   end;
 end;
 
@@ -270,6 +254,11 @@ begin
   end;
 
   dbgContacts.DataSource := OldDataSource;
+end;
+
+procedure TMainForm.btnSettingsClick(Sender: TObject);
+begin
+  // Настройка фильтров
 end;
 
 procedure TMainForm.ButtonFilterClick(Sender: TObject);
