@@ -51,6 +51,7 @@ begin
 
     ExtRoot := ReadString('MAIN', 'EXT_ROOT_PATH', tmpExtRoot);
     UniRoot := ReadString('MAIN', 'UNI_ROOT_PATH', tmpUniRoot);
+    Port    := ReadInteger('MAIN', 'SERVER_PORT', 8080);
 
     Free;
   end;
@@ -66,6 +67,7 @@ begin
   with TIniFile.Create(StartPath + 'config.ini') do begin
     WriteString('MAIN', 'EXT_ROOT_PATH', ExtRoot);
     WriteString('MAIN', 'UNI_ROOT_PATH', UniRoot);
+    WriteInteger('MAIN', 'SERVER_PORT', Port);
 
     Free;
   end;
