@@ -60,21 +60,24 @@ end;
 
 procedure TUniMainModule.UniGUIMainModuleCreate(Sender: TObject);
 var
-  xAppPath : string;
+  xAppPath, DbServer: string;
+  DbPort : Integer;
 begin
   // указываем путь до клиентской библиотеки
   xAppPath := UniServerModule.StartPath;
   dbdFirebird.VendorLib := xAppPath + 'fbclient' + PathDelim +
-    'fbclient.dll';  with dbConn.Params do begin    Values[ 'Database' ]     := xAppPath + 'DATA\IVIEWER.FDB';
+    'fbclient.dll';  with TIniFile.Create( UniServerModule.StartPath + 'config.ini' ) do  begin
+    FDataLog := ReadBool('DEBUG', 'DEBUG_DATA_LOG', False);
+    DbServer := ReadString('DATABASE', 'DB_SERVER', 'LOCALHOST');
+    DbPort   := ReadInteger('DATABASE', 'DB_PORT', 3050);
+
+    Free;
+  end;  with dbConn.Params do begin    Values[ 'Server' ]       := DbServer;    Values[ 'Port' ]         := IntToStr(DbPort);    Values[ 'Database' ]     := xAppPath + 'DATA\IVIEWER.FDB';
     Values[ 'UserName' ]     := 'SYSDBA';
     Values[ 'Password' ]     := 'masterkey';
     Values[ 'CharacterSet' ] := 'UTF8';
     Values[ 'MonitorBy' ]    := 'FlatFile';
-  end;  with TIniFile.Create( UniServerModule.StartPath + 'config.ini' ) do  begin
-    FDataLog := ReadBool('DEBUG', 'DEBUG_DATA_LOG', False);
-
-    Free;
-  end;end;
+  end;end;
 initialization
   RegisterMainModuleClass(TUniMainModule);
 end.
